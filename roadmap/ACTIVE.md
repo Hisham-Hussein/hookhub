@@ -2,68 +2,70 @@
 
 ## Current Focus
 
-Continue the HookHub planning pipeline: generate architecture document from completed SRS and business case.
+Generate phase plans (PHASE-1 through PHASE-6) using the newly built `/plan-phase-tasks` skill, then begin MVP implementation.
 
 ## Success Criteria
 
-- [x] BUSINESS-CASE.md produced (9-section format)
-- [x] STORY-MAP.md produced (4 activities, 9 tasks, 21 stories, 3 releases)
-- [x] Design gaps resolved (compact cards, toggle chips, AND filter logic)
-- [x] create-requirements skill patched to parse resolved story map context
-- [x] USER-STORIES.md produced via `/create-requirements` (story-map mode)
-- [x] REQUIREMENTS.md produced via `/create-requirements` (SRS-only mode)
-- [ ] ARCHITECTURE-DOC.md produced via `/create-design-doc`
-- [x] UX skill spec produced (`roadmap/UX-SKILL-SPEC.md` — strategic decisions, output template, research roadmap)
-- [ ] UX skill deep research conducted (8 areas in UX-SKILL-SPEC.md Section 11)
-- [ ] UX expertise skill built via `create-agent-skills`
-- [ ] UX-DESIGN-PLAN.md produced for HookHub
-- [ ] Execution plan produced via `/create-execution-plan`
+- [x] Fix Issue 6: Add invocation model paragraph to Leg 2 spec
+- [x] Fix Issue 11: Define PHASE-N-PLAN.md template header and section order
+- [x] `.charter/DESIGN-TOKENS.md` created from iSemantics brand guidelines
+- [x] Spec review rounds 3-8 complete (56 issues total: 20 fixed, 28 invalid, 8 other)
+- [x] `generate-section-manifest.py` built and verified (100% story coverage)
+- [x] `/plan-phase-tasks` skill designed and built via `/create-agent-skills`
+- [x] UX expertise skill built (prior session)
+- [ ] Phase plans produced (PHASE-N-PLAN.md per slice)
 - [ ] MVP implementation started
 
 ## Progress
 
-### This Session (2026-02-01)
-- Generated `.charter/REQUIREMENTS.md` — 52 FR (7 domains) + 9 NFR (ISO 25010) + 1 TRANS, full BR-XX traceability
-- Identified 1 implicit requirement: FR-FILT-12 (empty state when AND filters return zero results) — gap in story map's MVP
-- Priority distribution: Must=45 (73%), Should=7 (11%), Could=10 (16%)
-- Data model: 7/7 hook fields at 100% coverage
-- Decided architecture input: REQUIREMENTS.md + BUSINESS-CASE.md (not user stories — architecture describes system structure, not release phasing)
+### Last Session (this one)
 
-### This Session (2026-02-01, session 2)
-- Brainstormed UX design expertise skill: inputs, output structure, methodology, skill type
-- Decided: domain expertise skill, story map required input, design-system-agnostic output, 11-section template, combined role-based + semantic hierarchy, 500-line splitting rule
-- Produced `roadmap/UX-SKILL-SPEC.md` with full spec + 8-area research roadmap
-- Updated QUEUE.md with 3-step UX skill pipeline (research → build skill → generate plan)
+- Built `/plan-phase-tasks` skill: SKILL.md (366 lines, simple pattern), `templates/phase-plan-template.md`, slash command
+- Validation script passed, self-verification subagent PASS on all 7 checks
+- Committed to claude-forge master (`e61c3ad`), pushed, synced cache
+- Files created:
+  - `~/.claude/plugins/marketplaces/claude-forge/skills/plan-phase-tasks/SKILL.md`
+  - `~/.claude/plugins/marketplaces/claude-forge/skills/plan-phase-tasks/templates/phase-plan-template.md`
+  - `~/.claude/plugins/marketplaces/claude-forge/commands/plan-phase-tasks.md`
 
 ### Not Started
-- Architecture document
-- UX skill deep research (8 areas)
-- UX expertise skill build
-- Execution plan
+
+- Generate phase plans (PHASE-1 through PHASE-6)
 - MVP implementation
+
+## How to Continue
+
+### Step 1: Generate phase plans
+
+Run `/plan-phase-tasks` for each phase. MVP phases (1-3) have UI stories, so use `--has-ui`:
+
+```
+/plan-phase-tasks 1 --has-ui
+/plan-phase-tasks 2 --has-ui
+/plan-phase-tasks 3 --has-ui
+/plan-phase-tasks 4
+/plan-phase-tasks 5
+/plan-phase-tasks 6
+```
+
+Wave 1 (PHASE-1) must be planned first (walking skeleton). Wave 2 phases (2, 3) can be planned in parallel. Check `.charter/ROADMAP.md` for wave groupings.
+
+### Step 2: Begin MVP implementation
+
+Feed PHASE-1-PLAN.md into `superpowers:writing-plans` → `superpowers:executing-plans` for TDD execution.
 
 ## Blockers
 
 None.
 
-## How to Continue
-
-1. Run `/create-design-doc .charter/REQUIREMENTS.md .charter/BUSINESS-CASE.md` to generate ARCHITECTURE-DOC.md.
-2. Run `/research:deep-dive` on the 8 research areas in `roadmap/UX-SKILL-SPEC.md` Section 11.
-3. Run `/create-agent-skills` (domain expertise workflow) with spec + research as inputs.
-4. Use the new UX skill to generate UX-DESIGN-PLAN.md for HookHub.
-5. Run `/create-execution-plan` after architecture and UX plan are done.
-
 ## Key Artifacts
 
 | Artifact | Path | Status |
 |----------|------|--------|
-| Business Case | `.charter/BUSINESS-CASE.md` | Complete |
-| Story Map | `.charter/STORY-MAP.md` | Complete |
-| User Stories | `.charter/USER-STORIES.md` | Complete (21 stories, 4 epics) |
-| Requirements (SRS) | `.charter/REQUIREMENTS.md` | Complete (52 FR, 9 NFR, 1 TRANS) |
-| Architecture | `.charter/ARCHITECTURE-DOC.md` | Not started |
-| UX Skill Spec | `roadmap/UX-SKILL-SPEC.md` | Complete (strategic decisions + research roadmap) |
-| UX Skill Research | `artifacts/research/skills/` | Not started (8 areas via `/research:deep-dive`) |
-| UX Expertise Skill | `~/.claude/skills/expertise/ux-design/` | Not started (via `/create-agent-skills`) |
-| UX Design Plan | `.charter/UX-DESIGN-PLAN.md` | Blocked (skill doesn't exist yet) |
+| `/plan-phase-tasks` skill | `~/.claude/plugins/marketplaces/claude-forge/skills/plan-phase-tasks/` | **Built** — SKILL.md + template + 2 scripts (149 tests) |
+| Skill Design Spec | `roadmap/SKILL-DESIGN-PLAN-PHASE-TASKS.md` | Complete — 8 review rounds, 56 issues resolved |
+| Roadmap | `.charter/ROADMAP.md` | Complete (6 phases, 3 releases) |
+| Architecture | `.charter/ARCHITECTURE-DOC.md` | Complete (uses "Adapters" layer name) |
+| User Stories | `.charter/USER-STORIES.md` | Complete |
+| Design Tokens | `.charter/DESIGN-TOKENS.md` | Complete |
+| Design OS Export | `.charter/design-os-export/` | Complete |

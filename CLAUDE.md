@@ -6,6 +6,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 HookHub is a browsable, filterable web directory of open-source Claude Code hooks. Each hook links to its GitHub source repository. The MVP displays a curated catalog in a grid with filtering by purpose category and lifecycle event. No user accounts, no database — read-only site backed by a local JSON manifest enriched via GitHub API at build time.
 
+**Current status:** Pre-implementation. The app is a Next.js scaffold (`app/page.tsx` is the default template). All planning artifacts are complete — implementation has not started. See `roadmap/ACTIVE.md` for next steps.
+
 ## Commands
 
 ```bash
@@ -19,24 +21,63 @@ npx playwright test tests/e2e/foo.spec.ts  # Run a single test file
 
 ## Architecture
 
-- **App Router**: All routes live in `app/`. Files are React Server Components by default; add `"use client"` directive for client components that need interactivity (filters, search).
-- **Styling**: Tailwind CSS v4 via `@tailwindcss/postcss` plugin. Global styles and CSS custom properties for theming (light/dark) are in `app/globals.css`. Uses `@import "tailwindcss"` syntax (not the v3 `@tailwind` directives). No separate CSS files — use Tailwind utility classes exclusively.
-- **Fonts**: Geist Sans and Geist Mono loaded via `next/font/google` in `app/layout.tsx`, injected as CSS variables.
+- **Stack**: Next.js 16 + React 19 + TypeScript 5 (strict mode). App Router with React Server Components by default; add `"use client"` directive for client components that need interactivity (filters, search).
+- **Styling**: Tailwind CSS v4 via `@tailwindcss/postcss` plugin. Uses `@import "tailwindcss"` and `@theme inline` syntax (not the v3 `@tailwind` directives). No separate CSS files — use Tailwind utility classes exclusively. Global styles and CSS custom properties for theming in `app/globals.css`.
+- **Design tokens**: iSemantics brand — dark-first palette (`#000000` bg, blue accents `#3A5AFF`/`#2DA7FF`/`#92E6FD`), Poppins headings + Roboto body fonts. Full spec in `.charter/DESIGN-TOKENS.md`. The current scaffold uses Geist fonts — implementation must replace with brand fonts.
 - **Path alias**: `@/*` maps to the project root (configured in `tsconfig.json`).
 - **Package manager**: pnpm (use `pnpm` for all install/run commands).
-- **Data flow**: `data/hooks.json` (curator-maintained manifest of hook repo URLs) → build-time GitHub API enrichment (stars, description, freshness) → static props served to the grid.
+- **Data flow**: `data/hooks.json` (curator-maintained manifest of hook repo URLs) → build-time GitHub API enrichment (stars, description, freshness) → static props served to the grid. The `data/` directory and enrichment pipeline do not exist yet — they are part of PHASE-1.
+
+### Domain Model
+
+Defined in `.charter/design-os-export/data-model/types.ts`:
+
+- **Hook**: name, githubRepoUrl, purposeCategory, lifecycleEvent, description, starsCount, lastUpdated
+- **PurposeCategory**: Safety | Automation | Notification | Formatting | Testing | Security | Logging | Custom
+- **LifecycleEvent**: PreToolUse | PostToolUse | UserPromptSubmit | Notification | Stop
 
 ## Testing
 
-Playwright E2E tests live in `tests/e2e/`. Config is in `playwright.config.ts` using a custom chromium wrapper at `scripts/chrome-wrapper.sh`. Test plans go in `specs/`.
+Playwright E2E tests live in `tests/e2e/`. Config is in `playwright.config.ts` using a custom chromium wrapper at `scripts/chrome-wrapper.sh`. Test plans go in `specs/`. The current test file (`todomvc.spec.ts`) is a Playwright setup validation against an external demo — it will be replaced with HookHub-specific tests during implementation.
 
 ## Planning Artifacts
 
-Planning documents live in `.charter/` and follow a sequential pipeline:
+Planning documents live in `.charter/` and follow a sequential pipeline (all complete):
 
 1. `BUSINESS-CASE.md` — Business requirements (BR-01 through BR-09)
 2. `STORY-MAP.md` — User journey map with release slices (MVP/R2/Future)
-3. `USER-STORIES.md` — Full story cards with acceptance criteria (not yet generated)
-4. `ARCHITECTURE-DOC.md` — Software architecture (not yet generated)
+3. `REQUIREMENTS.md` — Formal software requirements
+4. `USER-STORIES.md` — Full story cards with acceptance criteria
+5. `ARCHITECTURE-DOC.md` — Software architecture (C4 diagrams, domain model, adapters layer)
+6. `ROADMAP.md` — 6-phase delivery plan across 3 releases (MVP → R2 → Future)
+7. `DESIGN-TOKENS.md` — Color, typography, spacing tokens from iSemantics brand
+8. `UX-DESIGN-PLAN.md`, `UX-COMPONENTS.md`, `UX-FLOWS.md`, `UX-INTERACTIONS.md` — UX specifications
+9. `PHASE-1-PLAN.md` — Detailed task plan for the walking skeleton phase
 
-The `roadmap/` folder tracks active work (`ACTIVE.md`), queue (`QUEUE.md`), and decisions (`LOG.md`).
+### Design OS Export
+
+`.charter/design-os-export/` contains reference TSX components, sample data, and implementation instructions generated by Design OS:
+
+- `design-system/` — CSS tokens, font specs, Tailwind color mappings
+- `data-model/` — TypeScript types and sample JSON data
+- `shell/` — AppShell, HeroBanner, PageFooter reference components
+- `sections/` — landing-and-hero, hook-catalog, filter-system, dark-and-light-mode (each with components, tests.md, sample data)
+- `instructions/incremental/` — Step-by-step implementation guides (01-foundation through 05-dark-and-light-mode)
+
+### Roadmap
+
+The `roadmap/` folder tracks active work (`ACTIVE.md`), queue (`QUEUE.md`), and decisions (`LOG.md`). The implementation roadmap in `.charter/ROADMAP.md` defines 6 phases:
+
+- **PHASE-1**: Walking skeleton — hero, grid, cards, filters, build pipeline (8 stories)
+- **PHASE-2**: Rich card metadata — badges, descriptions, stars (4 stories)
+- **PHASE-3**: Filter & data pipeline polish — "All" reset options, link validation (4 stories)
+- **PHASE-4/5/6**: R2 and Future enhancements
+
+## Plugin / Skill Modifications
+
+**NEVER modify files under `~/.claude/plugins/cache/`**. The cache is a read-only copy that gets overwritten on plugin updates — any changes made there will be silently lost.
+
+To modify a locally-maintained plugin or skill:
+1. Find the **source repo** under `~/.claude/plugins/marketplaces/` (NOT `cache/`)
+2. Make changes there
+3. The cache will pick up changes on next plugin reload

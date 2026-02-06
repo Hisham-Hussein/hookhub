@@ -1,0 +1,47 @@
+/* Design Tokens for HookHub */
+
+:root {
+  /* Colors — Tailwind v4 */
+  --color-primary: sky;
+  --color-secondary: indigo;
+  --color-neutral: zinc;
+
+  /* Typography */
+  --font-heading: 'Poppins', sans-serif;
+  --font-body: 'Roboto', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+/* Light mode (default) */
+:root {
+  --bg-page: #ffffff;
+  --bg-page-alt: #fafafa; /* zinc-50 */
+  --bg-card: #ffffff;
+  --text-heading: #18181b; /* zinc-900 */
+  --text-body: #3f3f46; /* zinc-700 */
+  --text-muted: #52525b; /* zinc-600 */
+  --border-card: #e4e4e7; /* zinc-200 */
+  --border-footer: #d4d4d8; /* zinc-300 */
+  --accent-primary: #0284c7; /* sky-600 */
+  --badge-category-bg: #f0f9ff; /* sky-50 */
+  --badge-category-text: #0369a1; /* sky-700 */
+  --badge-event-bg: #eef2ff; /* indigo-50 */
+  --badge-event-text: #4338ca; /* indigo-700 */
+}
+
+/* Dark mode */
+.dark {
+  --bg-page: #000000;
+  --bg-page-alt: #000000;
+  --bg-card: #09090b; /* zinc-950 */
+  --text-heading: #f4f4f5; /* zinc-100 */
+  --text-body: #a1a1aa; /* zinc-400 */
+  --text-muted: #71717a; /* zinc-500 */
+  --border-card: #27272a; /* zinc-800 */
+  --border-footer: #27272a; /* zinc-800 */
+  --accent-primary: #38bdf8; /* sky-400 */
+  --badge-category-bg: rgba(14, 165, 233, 0.15); /* sky-500/15 */
+  --badge-category-text: #38bdf8; /* sky-400 */
+  --badge-event-bg: rgba(99, 102, 241, 0.15); /* indigo-500/15 */
+  --badge-event-text: #818cf8; /* indigo-400 */
+}

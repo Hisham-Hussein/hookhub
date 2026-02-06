@@ -1,0 +1,84 @@
+{
+  "_meta": {
+    "models": {
+      "categoryOptions": "The filter chip options for the purpose category dimension. Each option represents one of the eight hook classifications, plus 'All' as the default. The hookCount shows how many of the 18 catalog hooks belong to each category.",
+      "eventOptions": "The filter chip options for the lifecycle event dimension. Each option represents one of the five lifecycle events, plus 'All' as the default. The hookCount shows how many of the 18 catalog hooks fire at each event.",
+      "filterEmptyState": "Fallback content shown when the AND-intersection of selected category and event produces zero matching hooks. Includes a call-to-action to clear all filters.",
+      "testScenarios": "Representative AND-intersection filter combinations used to verify result counts, zero-result empty states, and URL query param formatting during design and development."
+    },
+    "relationships": [
+      "Filter options derive from the Hook Catalog's 18 hooks — categoryOptions map to Hook.purposeCategory, eventOptions map to Hook.lifecycleEvent",
+      "Selecting one categoryOption AND one eventOption filters hooks by AND-intersection (both must match)",
+      "Each dimension is independent — 'All' in one row does not affect the other row's selection",
+      "The filterEmptyState appears only when a combined filter produces zero results"
+    ]
+  },
+  "categoryOptions": [
+    { "label": "All", "value": "all", "hookCount": 18 },
+    { "label": "Safety", "value": "Safety", "hookCount": 3 },
+    { "label": "Automation", "value": "Automation", "hookCount": 2 },
+    { "label": "Notification", "value": "Notification", "hookCount": 2 },
+    { "label": "Formatting", "value": "Formatting", "hookCount": 2 },
+    { "label": "Testing", "value": "Testing", "hookCount": 2 },
+    { "label": "Security", "value": "Security", "hookCount": 3 },
+    { "label": "Logging", "value": "Logging", "hookCount": 2 },
+    { "label": "Custom", "value": "Custom", "hookCount": 2 }
+  ],
+  "eventOptions": [
+    { "label": "All", "value": "all", "hookCount": 18 },
+    { "label": "PreToolUse", "value": "PreToolUse", "hookCount": 4 },
+    { "label": "PostToolUse", "value": "PostToolUse", "hookCount": 7 },
+    { "label": "UserPromptSubmit", "value": "UserPromptSubmit", "hookCount": 2 },
+    { "label": "Notification", "value": "Notification", "hookCount": 2 },
+    { "label": "Stop", "value": "Stop", "hookCount": 3 }
+  ],
+  "filterEmptyState": {
+    "title": "No hooks match these filters",
+    "message": "Try changing one of the filters or clear both to see all hooks.",
+    "ctaLabel": "Clear all filters"
+  },
+  "testScenarios": [
+    {
+      "description": "Safety + PreToolUse — two hooks match (safe-rm, branch-guard)",
+      "category": "Safety",
+      "event": "PreToolUse",
+      "expectedCount": 2,
+      "urlParams": "?category=Safety&event=PreToolUse"
+    },
+    {
+      "description": "Security + UserPromptSubmit — one hook matches (input-sanitizer)",
+      "category": "Security",
+      "event": "UserPromptSubmit",
+      "expectedCount": 1,
+      "urlParams": "?category=Security&event=UserPromptSubmit"
+    },
+    {
+      "description": "Formatting + PostToolUse — two hooks match (auto-prettier, eslint-autofix)",
+      "category": "Formatting",
+      "event": "PostToolUse",
+      "expectedCount": 2,
+      "urlParams": "?category=Formatting&event=PostToolUse"
+    },
+    {
+      "description": "Safety + PostToolUse — zero results (empty state scenario)",
+      "category": "Safety",
+      "event": "PostToolUse",
+      "expectedCount": 0,
+      "urlParams": "?category=Safety&event=PostToolUse"
+    },
+    {
+      "description": "Testing + Stop — zero results (empty state scenario)",
+      "category": "Testing",
+      "event": "Stop",
+      "expectedCount": 0,
+      "urlParams": "?category=Testing&event=Stop"
+    },
+    {
+      "description": "All + PostToolUse — single-dimension filter, seven hooks match",
+      "category": "all",
+      "event": "PostToolUse",
+      "expectedCount": 7,
+      "urlParams": "?event=PostToolUse"
+    }
+  ]
+}

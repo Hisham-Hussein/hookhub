@@ -1,0 +1,184 @@
+{
+  "_meta": {
+    "models": {
+      "hooks": "Each hook is an open-source Claude Code hook listed in the directory. The Hook Catalog displays all hooks in a responsive card grid. Each hook has a display name, description from GitHub, star count, purpose category, lifecycle event, and a link to the source repository.",
+      "purposeCategories": "The eight classifications of what a hook does: Safety, Automation, Notification, Formatting, Testing, Security, Logging, and Custom. Displayed as a badge on each hook card.",
+      "lifecycleEvents": "The five points in the Claude Code execution lifecycle when a hook can fire: PreToolUse, PostToolUse, UserPromptSubmit, Notification, and Stop. Displayed as a badge on each hook card.",
+      "emptyState": "Fallback content shown when the catalog has zero hooks (empty manifest edge case)."
+    },
+    "relationships": [
+      "Each Hook has exactly one PurposeCategory (what it does)",
+      "Each Hook has exactly one LifecycleEvent (when it fires)",
+      "The Hook Catalog renders all hooks in a card grid — no pagination"
+    ]
+  },
+  "emptyState": {
+    "title": "No hooks yet",
+    "message": "The catalog is empty. Check back soon — new hooks are added regularly.",
+    "icon": "inbox"
+  },
+  "hooks": [
+    {
+      "name": "safe-rm",
+      "githubRepoUrl": "https://github.com/devtools-org/safe-rm-hook",
+      "purposeCategory": "Safety",
+      "lifecycleEvent": "PreToolUse",
+      "description": "Prevents accidental deletion of critical system files and project directories by intercepting rm, rmdir, and unlink commands against a configurable blocklist of protected paths.",
+      "starsCount": 1247,
+      "lastUpdated": "2026-01-28"
+    },
+    {
+      "name": "auto-prettier",
+      "githubRepoUrl": "https://github.com/fmt-hooks/auto-prettier",
+      "purposeCategory": "Formatting",
+      "lifecycleEvent": "PostToolUse",
+      "description": "Runs Prettier on any file modified by Claude Code, ensuring consistent code formatting without manual intervention. Supports .prettierrc configuration.",
+      "starsCount": 892,
+      "lastUpdated": "2026-01-15"
+    },
+    {
+      "name": "slack-notify",
+      "githubRepoUrl": "https://github.com/hooksmith/slack-notify",
+      "purposeCategory": "Notification",
+      "lifecycleEvent": "Stop",
+      "description": "Sends a Slack message to a configured channel when Claude Code finishes a task, including a summary of files changed and the final status.",
+      "starsCount": 634,
+      "lastUpdated": "2026-01-22"
+    },
+    {
+      "name": "test-on-save",
+      "githubRepoUrl": "https://github.com/tdd-hooks/test-on-save",
+      "purposeCategory": "Testing",
+      "lifecycleEvent": "PostToolUse",
+      "description": "Automatically runs affected test suites after file modifications using jest --findRelatedTests, catching regressions as Claude writes code.",
+      "starsCount": 2103,
+      "lastUpdated": "2026-01-30"
+    },
+    {
+      "name": "secret-scanner",
+      "githubRepoUrl": "https://github.com/secops-hooks/secret-scanner",
+      "purposeCategory": "Security",
+      "lifecycleEvent": "PreToolUse",
+      "description": "Scans file contents for hardcoded API keys, tokens, passwords, and other secrets before allowing write operations. Uses pattern matching and entropy detection.",
+      "starsCount": 3451,
+      "lastUpdated": "2026-01-29"
+    },
+    {
+      "name": "git-auto-stage",
+      "githubRepoUrl": "https://github.com/workflow-hooks/git-auto-stage",
+      "purposeCategory": "Automation",
+      "lifecycleEvent": "PostToolUse",
+      "description": "Stages modified files in git after successful edits, keeping the working tree clean and ready for commits.",
+      "starsCount": 415,
+      "lastUpdated": "2025-12-18"
+    },
+    {
+      "name": "change-ledger",
+      "githubRepoUrl": "https://github.com/audit-hooks/change-ledger",
+      "purposeCategory": "Logging",
+      "lifecycleEvent": "PostToolUse",
+      "description": "Maintains a structured JSON log of every file change made during a Claude Code session, including timestamps, diffs, and tool invocations.",
+      "starsCount": 178,
+      "lastUpdated": "2026-01-10"
+    },
+    {
+      "name": "prompt-guard",
+      "githubRepoUrl": "https://github.com/claude-safety/prompt-guard",
+      "purposeCategory": "Safety",
+      "lifecycleEvent": "UserPromptSubmit",
+      "description": "Validates user prompts against configurable rules before submission — blocks destructive commands like 'delete everything' or 'drop database' and requests confirmation for high-risk operations.",
+      "starsCount": 967,
+      "lastUpdated": "2026-01-25"
+    },
+    {
+      "name": "dep-audit",
+      "githubRepoUrl": "https://github.com/secops-hooks/dep-audit",
+      "purposeCategory": "Security",
+      "lifecycleEvent": "PostToolUse",
+      "description": "Runs npm audit or pnpm audit automatically after package.json changes, blocking the session if critical vulnerabilities are introduced.",
+      "starsCount": 521,
+      "lastUpdated": "2026-01-20"
+    },
+    {
+      "name": "session-recap",
+      "githubRepoUrl": "https://github.com/hooksmith/session-recap",
+      "purposeCategory": "Custom",
+      "lifecycleEvent": "Notification",
+      "description": "Generates a markdown summary of the entire Claude Code session on completion — files touched, tools used, decisions made — and saves it to .claude/recaps/.",
+      "starsCount": 89,
+      "lastUpdated": "2025-11-30"
+    },
+    {
+      "name": "eslint-autofix",
+      "githubRepoUrl": "https://github.com/fmt-hooks/eslint-autofix",
+      "purposeCategory": "Formatting",
+      "lifecycleEvent": "PostToolUse",
+      "description": "Runs ESLint with --fix on modified files after Claude Code edits them. Catches style violations and auto-corrects fixable issues before they reach code review.",
+      "starsCount": 1034,
+      "lastUpdated": "2026-01-27"
+    },
+    {
+      "name": "branch-guard",
+      "githubRepoUrl": "https://github.com/devtools-org/branch-guard",
+      "purposeCategory": "Safety",
+      "lifecycleEvent": "PreToolUse",
+      "description": "Blocks write operations when on protected branches (main, master, production). Forces Claude Code to work on feature branches only.",
+      "starsCount": 756,
+      "lastUpdated": "2026-01-18"
+    },
+    {
+      "name": "ci-trigger",
+      "githubRepoUrl": "https://github.com/workflow-hooks/ci-trigger",
+      "purposeCategory": "Automation",
+      "lifecycleEvent": "Stop",
+      "description": "Triggers a CI pipeline run via GitHub Actions API when Claude Code completes a session with committed changes. Includes the session summary as the workflow dispatch payload so CI logs link back to what changed and why.",
+      "starsCount": 312,
+      "lastUpdated": "2026-01-12"
+    },
+    {
+      "name": "verbose-log",
+      "githubRepoUrl": "https://github.com/audit-hooks/verbose-log",
+      "purposeCategory": "Logging",
+      "lifecycleEvent": "PreToolUse",
+      "description": "Logs every tool invocation to a rotating file with timestamps, arguments, and caller context. Useful for debugging hook interactions and auditing Claude Code behavior in regulated environments.",
+      "starsCount": 47,
+      "lastUpdated": "2025-12-05"
+    },
+    {
+      "name": "desktop-notify",
+      "githubRepoUrl": "https://github.com/hooksmith/desktop-notify",
+      "purposeCategory": "Notification",
+      "lifecycleEvent": "Notification",
+      "description": "Shows native OS desktop notifications for Claude Code events. Configurable per event type.",
+      "starsCount": 223,
+      "lastUpdated": "2026-01-08"
+    },
+    {
+      "name": "snapshot-test-generator",
+      "githubRepoUrl": "https://github.com/tdd-hooks/snapshot-test-generator",
+      "purposeCategory": "Testing",
+      "lifecycleEvent": "PostToolUse",
+      "description": "Automatically generates or updates Jest snapshot tests for React components after Claude Code modifies JSX/TSX files. Detects component boundaries and creates __snapshots__ entries that match the updated render output, reducing manual test maintenance.",
+      "starsCount": 0,
+      "lastUpdated": "2026-01-31"
+    },
+    {
+      "name": "input-sanitizer-and-prompt-validation-middleware",
+      "githubRepoUrl": "https://github.com/claude-safety/input-sanitizer-middleware",
+      "purposeCategory": "Security",
+      "lifecycleEvent": "UserPromptSubmit",
+      "description": "Strips HTML, script tags, and known injection patterns from user prompts before they reach Claude Code. Applies configurable sanitization rules and logs blocked content for review.",
+      "starsCount": 1502,
+      "lastUpdated": "2026-01-26"
+    },
+    {
+      "name": "custom-metrics",
+      "githubRepoUrl": "https://github.com/hooksmith/custom-metrics",
+      "purposeCategory": "Custom",
+      "lifecycleEvent": "Stop",
+      "description": "Collects session-level metrics (duration, tool calls, files modified, tokens used) and writes them to a local JSON file or sends them to a configurable webhook endpoint. Useful for teams tracking Claude Code usage patterns across projects.",
+      "starsCount": 156,
+      "lastUpdated": "2026-01-14"
+    }
+  ]
+}

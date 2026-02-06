@@ -1,0 +1,344 @@
+{
+  "_meta": {
+    "models": {
+      "themeTokens": "Semantic color token mappings for light and dark modes. Each token pairs a UI role (like 'page background' or 'heading text') with the Tailwind classes to use in each mode. Components reference these roles instead of hardcoding colors.",
+      "componentMappings": "Per-component class transformation guide showing exactly which Tailwind classes change when adding dual-mode support. Each entry lists the file path, the current dark-only classes, and the new classes with light defaults plus dark: variants.",
+      "foucPrevention": "The inline script that runs before first paint to detect the user's system color scheme preference and apply the .dark class to the HTML element, preventing a flash of the wrong theme."
+    },
+    "relationships": [
+      "ThemeTokens define the color contract — every component's classes derive from these semantic roles",
+      "ComponentMappings reference ThemeTokens to show the concrete class changes per file",
+      "FoucPrevention ensures the correct theme token set is active before any component renders"
+    ]
+  },
+
+  "themeTokens": {
+    "backgrounds": {
+      "page": {
+        "light": "bg-white",
+        "dark": "bg-black",
+        "description": "Main page background"
+      },
+      "pageAlt": {
+        "light": "bg-zinc-50",
+        "dark": "bg-black",
+        "description": "Alternate page background for subtle contrast"
+      },
+      "card": {
+        "light": "bg-white",
+        "dark": "bg-zinc-950",
+        "description": "Card and content surface background"
+      }
+    },
+    "text": {
+      "heading": {
+        "light": "text-zinc-900",
+        "dark": "text-zinc-100",
+        "description": "Primary headings (h1, h2)"
+      },
+      "body": {
+        "light": "text-zinc-700",
+        "dark": "text-zinc-400",
+        "description": "Standard body/description text"
+      },
+      "muted": {
+        "light": "text-zinc-600",
+        "dark": "text-zinc-500",
+        "description": "De-emphasized text (star counts, labels, footer)"
+      },
+      "icon": {
+        "light": "text-zinc-400",
+        "dark": "text-zinc-600",
+        "description": "Decorative icons (scroll arrow, etc.)"
+      }
+    },
+    "borders": {
+      "card": {
+        "light": "border-zinc-200",
+        "dark": "border-zinc-800",
+        "description": "Card and content surface borders"
+      },
+      "footer": {
+        "light": "border-zinc-300",
+        "dark": "border-zinc-800",
+        "description": "Footer top divider border"
+      },
+      "filterInactive": {
+        "light": "border-zinc-300",
+        "dark": "border-zinc-700/80",
+        "description": "Inactive filter chip border"
+      }
+    },
+    "accents": {
+      "primary": {
+        "light": "text-sky-600",
+        "dark": "text-sky-400",
+        "description": "Primary accent color for links and interactive text"
+      },
+      "primaryHover": {
+        "light": "hover:text-sky-700",
+        "dark": "hover:text-sky-300",
+        "description": "Primary accent hover state"
+      }
+    },
+    "badges": {
+      "category": {
+        "light": {
+          "bg": "bg-sky-50",
+          "text": "text-sky-700",
+          "border": "border-sky-200"
+        },
+        "dark": {
+          "bg": "bg-sky-500/15",
+          "text": "text-sky-400",
+          "border": "border-sky-500/20"
+        },
+        "description": "Purpose category badges (Safety, Automation, etc.)"
+      },
+      "event": {
+        "light": {
+          "bg": "bg-indigo-50",
+          "text": "text-indigo-700",
+          "border": "border-indigo-200"
+        },
+        "dark": {
+          "bg": "bg-indigo-500/15",
+          "text": "text-indigo-400",
+          "border": "border-indigo-500/20"
+        },
+        "description": "Lifecycle event badges (PreToolUse, PostToolUse, etc.)"
+      }
+    },
+    "filterChips": {
+      "categorySelected": {
+        "light": {
+          "bg": "bg-sky-100",
+          "text": "text-sky-800",
+          "border": "border-sky-300"
+        },
+        "dark": {
+          "bg": "bg-sky-500/20",
+          "text": "text-sky-300",
+          "border": "border-sky-500/30"
+        },
+        "description": "Selected category filter chip"
+      },
+      "eventSelected": {
+        "light": {
+          "bg": "bg-indigo-100",
+          "text": "text-indigo-800",
+          "border": "border-indigo-300"
+        },
+        "dark": {
+          "bg": "bg-indigo-500/20",
+          "text": "text-indigo-300",
+          "border": "border-indigo-500/30"
+        },
+        "description": "Selected event filter chip"
+      },
+      "inactive": {
+        "light": {
+          "text": "text-zinc-600",
+          "border": "border-zinc-300",
+          "hoverBorder": "hover:border-zinc-400",
+          "hoverText": "hover:text-zinc-800"
+        },
+        "dark": {
+          "text": "text-zinc-400",
+          "border": "border-zinc-700/80",
+          "hoverBorder": "hover:border-zinc-500",
+          "hoverText": "hover:text-zinc-300"
+        },
+        "description": "Inactive (unselected) filter chip"
+      }
+    },
+    "focus": {
+      "ringOffset": {
+        "light": "ring-offset-white",
+        "dark": "ring-offset-black",
+        "description": "Focus ring offset color (matches page background)"
+      }
+    },
+    "hover": {
+      "cardBorder": {
+        "light": "hover:border-zinc-400",
+        "dark": "hover:border-zinc-600",
+        "description": "Card hover border state"
+      }
+    }
+  },
+
+  "componentMappings": [
+    {
+      "component": "AppShell",
+      "file": "src/shell/components/AppShell.tsx",
+      "changes": [
+        {
+          "element": "root container",
+          "current": "bg-black text-zinc-300",
+          "updated": "bg-white text-zinc-700 dark:bg-black dark:text-zinc-300"
+        }
+      ]
+    },
+    {
+      "component": "HeroBanner",
+      "file": "src/shell/components/HeroBanner.tsx",
+      "changes": [
+        {
+          "element": "h1 title",
+          "current": "text-zinc-100",
+          "updated": "text-zinc-900 dark:text-zinc-100"
+        },
+        {
+          "element": "subtitle",
+          "current": "text-zinc-400",
+          "updated": "text-zinc-700 dark:text-zinc-400"
+        },
+        {
+          "element": "scroll arrow icon",
+          "current": "text-zinc-600",
+          "updated": "text-zinc-400 dark:text-zinc-600"
+        }
+      ]
+    },
+    {
+      "component": "PageFooter",
+      "file": "src/shell/components/PageFooter.tsx",
+      "changes": [
+        {
+          "element": "top border",
+          "current": "border-zinc-800",
+          "updated": "border-zinc-300 dark:border-zinc-800"
+        },
+        {
+          "element": "footer text",
+          "current": "text-zinc-500",
+          "updated": "text-zinc-600 dark:text-zinc-500"
+        }
+      ]
+    },
+    {
+      "component": "HookCard",
+      "file": "src/sections/hook-catalog/components/HookCard.tsx",
+      "changes": [
+        {
+          "element": "card container",
+          "current": "border-zinc-800 bg-zinc-950",
+          "updated": "border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-950"
+        },
+        {
+          "element": "hook name",
+          "current": "text-zinc-100",
+          "updated": "text-zinc-900 dark:text-zinc-100"
+        },
+        {
+          "element": "hook description",
+          "current": "text-zinc-400",
+          "updated": "text-zinc-700 dark:text-zinc-400"
+        },
+        {
+          "element": "star count",
+          "current": "text-zinc-500",
+          "updated": "text-zinc-600 dark:text-zinc-500"
+        },
+        {
+          "element": "category badge",
+          "current": "bg-sky-500/15 text-sky-400 border-sky-500/20",
+          "updated": "bg-sky-50 text-sky-700 border-sky-200 dark:bg-sky-500/15 dark:text-sky-400 dark:border-sky-500/20"
+        },
+        {
+          "element": "event badge",
+          "current": "bg-indigo-500/15 text-indigo-400 border-indigo-500/20",
+          "updated": "bg-indigo-50 text-indigo-700 border-indigo-200 dark:bg-indigo-500/15 dark:text-indigo-400 dark:border-indigo-500/20"
+        },
+        {
+          "element": "focus ring",
+          "current": "ring-offset-black",
+          "updated": "ring-offset-white dark:ring-offset-black"
+        },
+        {
+          "element": "hover state",
+          "current": "hover:border-zinc-600 hover:text-sky-300",
+          "updated": "hover:border-zinc-400 hover:text-sky-700 dark:hover:border-zinc-600 dark:hover:text-sky-300"
+        }
+      ]
+    },
+    {
+      "component": "HookCatalog",
+      "file": "src/sections/hook-catalog/components/HookCatalog.tsx",
+      "changes": [
+        {
+          "element": "empty state text",
+          "current": "text-zinc-500",
+          "updated": "text-zinc-600 dark:text-zinc-500"
+        }
+      ]
+    },
+    {
+      "component": "FilterChip",
+      "file": "src/sections/filter-system/components/FilterChip.tsx",
+      "changes": [
+        {
+          "element": "selected category chip",
+          "current": "bg-sky-500/20 text-sky-300 border-sky-500/30",
+          "updated": "bg-sky-100 text-sky-800 border-sky-300 dark:bg-sky-500/20 dark:text-sky-300 dark:border-sky-500/30"
+        },
+        {
+          "element": "selected event chip",
+          "current": "bg-indigo-500/20 text-indigo-300 border-indigo-500/30",
+          "updated": "bg-indigo-100 text-indigo-800 border-indigo-300 dark:bg-indigo-500/20 dark:text-indigo-300 dark:border-indigo-500/30"
+        },
+        {
+          "element": "inactive chip",
+          "current": "text-zinc-400 border-zinc-700/80 hover:border-zinc-500 hover:text-zinc-300",
+          "updated": "text-zinc-600 border-zinc-300 hover:border-zinc-400 hover:text-zinc-800 dark:text-zinc-400 dark:border-zinc-700/80 dark:hover:border-zinc-500 dark:hover:text-zinc-300"
+        },
+        {
+          "element": "focus ring",
+          "current": "ring-offset-black",
+          "updated": "ring-offset-white dark:ring-offset-black"
+        }
+      ]
+    },
+    {
+      "component": "FilterChipRow",
+      "file": "src/sections/filter-system/components/FilterChipRow.tsx",
+      "changes": [
+        {
+          "element": "label text",
+          "current": "text-zinc-500",
+          "updated": "text-zinc-600 dark:text-zinc-500"
+        }
+      ]
+    },
+    {
+      "component": "FilterBar",
+      "file": "src/sections/filter-system/components/FilterBar.tsx",
+      "changes": [
+        {
+          "element": "result count text",
+          "current": "text-zinc-500",
+          "updated": "text-zinc-600 dark:text-zinc-500"
+        }
+      ]
+    },
+    {
+      "component": "FilterSystem",
+      "file": "src/sections/filter-system/components/FilterSystem.tsx",
+      "changes": [
+        {
+          "element": "empty state text",
+          "current": "text-zinc-500",
+          "updated": "text-zinc-600 dark:text-zinc-500"
+        }
+      ]
+    }
+  ],
+
+  "foucPrevention": {
+    "description": "Inline script that must be placed in the <head> of index.html, before any stylesheets or other scripts. It synchronously checks the user's system color scheme preference and applies the .dark class to <html> before the browser paints, preventing a flash of the wrong theme.",
+    "scriptContent": "(function(){try{if(window.matchMedia('(prefers-color-scheme:dark)').matches){document.documentElement.classList.add('dark')}}catch(e){}})()",
+    "placement": "index.html <head>, before any <link> or <script> tags",
+    "behavior": "Reads prefers-color-scheme media query synchronously. If dark mode is preferred, adds .dark class to <html>. Light mode requires no class (it's the CSS default). Wrapped in try/catch for SSR safety."
+  }
+}

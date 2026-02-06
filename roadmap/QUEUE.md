@@ -2,19 +2,19 @@
 
 ## Next Up
 
-1. **Generate ARCHITECTURE-DOC.md** — Run `/create-design-doc .charter/REQUIREMENTS.md .charter/BUSINESS-CASE.md`. SRS provides domain-organized FRs mapping to components + NFRs driving tech decisions. No user stories needed — architecture describes system structure, not release phasing.
-2. **Deep research for UX skill (4 rounds)** — Run `/research:deep-dive` on 2 areas per round from `roadmap/UX-SKILL-SPEC.md` Section 11. Save output to `artifacts/research/skills/`.
-   - Round 1: Nielsen's Heuristics + Atomic Design
-   - Round 2: WCAG Accessibility + Responsive Patterns
-   - Round 3: Data States & Microcopy + Interaction Patterns
-   - Round 4: Information Architecture + Visual Hierarchy
-3. **Build UX design expertise skill** — Run `/create-agent-skills` (domain expertise workflow) with `roadmap/UX-SKILL-SPEC.md` + research from `artifacts/research/skills/` as inputs. Produces `expertise/ux-design/` with SKILL.md, workflows, references, and templates.
-4. **Generate UX-DESIGN-PLAN.md** — Use the new UX skill to produce the UX plan for HookHub from `.charter/STORY-MAP.md` + `.charter/USER-STORIES.md`.
-5. **Generate execution plan** — Run `/create-execution-plan` after architecture and UX plan are done.
-6. **Curate initial hook catalog** — Source 15-25 hooks from awesome-claude-code for `data/hooks.json` manifest (TRANS-01 in REQUIREMENTS.md).
+1. **Generate phase plans** — Run `/plan-phase-tasks` for PHASE-1 through PHASE-6 (use `--has-ui` for MVP phases with UI stories)
+2. **MVP implementation** — Feed PHASE-1-PLAN.md into `superpowers:writing-plans` → `superpowers:executing-plans`
+3. **Curate initial hook catalog** — Source 15-25 hooks from awesome-claude-code for `data/hooks.json` (TRANS-01)
 
 ## Backlog
 
-- **MVP implementation** — Build the Next.js app per execution plan
-- **Persist create-requirements patch** — The Phase 1c.6 edit is in plugin cache and will be lost on update. Consider upstreaming to claude-forge or maintaining a local overlay.
-- **Add analytics (post-MVP)** — Deferred per OI-04 in business case. Needed to measure Section 6 KPIs.
+- **Persist create-requirements patch** — Plugin cache edit will be lost on update
+- **Add analytics (post-MVP)** — Deferred per OI-04
+- **Delete old trace-phase-stories.sh** — Superseded by Python rewrite
+- **Deferred gaps** — Wave-level orchestration, writing-plans format compatibility, post-phase learning loop, branch strategy
+
+## Recently Completed
+
+- ✅ **`/plan-phase-tasks` skill built** — SKILL.md (366 lines), template, slash command. Validation + self-verification passed. Committed to claude-forge (`e61c3ad`)
+- ✅ **UX expertise skill built** — Prior session
+- ✅ **Spec review round 8** — 8 issues: 1 fixed (wave metadata extraction), 5 invalid/skipped, 2 downstream (superpowers integration)

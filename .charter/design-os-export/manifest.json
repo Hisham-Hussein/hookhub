@@ -1,0 +1,36 @@
+{
+  "sections": {
+    "dark-and-light-mode": [],
+    "filter-system": [
+      "US-013",
+      "US-014",
+      "US-015",
+      "US-016"
+    ],
+    "hook-catalog": [
+      "US-004",
+      "US-006",
+      "US-007",
+      "US-008",
+      "US-009",
+      "US-010",
+      "US-011",
+      "US-012",
+      "US-019",
+      "US-020"
+    ],
+    "landing-and-hero": [
+      "US-001",
+      "US-003"
+    ]
+  },
+  "metadata": {
+    "generated_by": "generate-section-manifest.py",
+    "model": "gpt-4.1-mini",
+    "traceability_rows_parsed": "18",
+    "unique_stories_in_traceability": "16",
+    "unique_stories_mapped": "16",
+    "sections_in_export": "4",
+    "unmapped_stories": "none"
+  }
+}
