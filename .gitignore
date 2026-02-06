@@ -36,6 +36,9 @@ yarn-error.log*
 # worktrees
 .worktrees/
 
+# build artifacts
+/data/enriched-hooks.json
+
 # vercel
 .vercel
 
