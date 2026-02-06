@@ -1,0 +1,80 @@
+[
+  {
+    "name": "safe-rm",
+    "githubRepoUrl": "https://github.com/anthropics/claude-code-hooks-safe-rm",
+    "purposeCategory": "Safety",
+    "lifecycleEvent": "PreToolUse"
+  },
+  {
+    "name": "auto-prettier",
+    "githubRepoUrl": "https://github.com/anthropics/claude-code-hooks-auto-prettier",
+    "purposeCategory": "Formatting",
+    "lifecycleEvent": "PostToolUse"
+  },
+  {
+    "name": "slack-notify",
+    "githubRepoUrl": "https://github.com/anthropics/claude-code-hooks-slack-notify",
+    "purposeCategory": "Notification",
+    "lifecycleEvent": "Stop"
+  },
+  {
+    "name": "test-on-save",
+    "githubRepoUrl": "https://github.com/anthropics/claude-code-hooks-test-on-save",
+    "purposeCategory": "Testing",
+    "lifecycleEvent": "PostToolUse"
+  },
+  {
+    "name": "secret-scanner",
+    "githubRepoUrl": "https://github.com/anthropics/claude-code-hooks-secret-scanner",
+    "purposeCategory": "Security",
+    "lifecycleEvent": "PreToolUse"
+  },
+  {
+    "name": "git-auto-stage",
+    "githubRepoUrl": "https://github.com/anthropics/claude-code-hooks-git-auto-stage",
+    "purposeCategory": "Automation",
+    "lifecycleEvent": "PostToolUse"
+  },
+  {
+    "name": "change-ledger",
+    "githubRepoUrl": "https://github.com/anthropics/claude-code-hooks-change-ledger",
+    "purposeCategory": "Logging",
+    "lifecycleEvent": "PostToolUse"
+  },
+  {
+    "name": "prompt-guard",
+    "githubRepoUrl": "https://github.com/anthropics/claude-code-hooks-prompt-guard",
+    "purposeCategory": "Safety",
+    "lifecycleEvent": "UserPromptSubmit"
+  },
+  {
+    "name": "session-recap",
+    "githubRepoUrl": "https://github.com/anthropics/claude-code-hooks-session-recap",
+    "purposeCategory": "Custom",
+    "lifecycleEvent": "Notification"
+  },
+  {
+    "name": "eslint-autofix",
+    "githubRepoUrl": "https://github.com/anthropics/claude-code-hooks-eslint-autofix",
+    "purposeCategory": "Formatting",
+    "lifecycleEvent": "PostToolUse"
+  },
+  {
+    "name": "branch-guard",
+    "githubRepoUrl": "https://github.com/anthropics/claude-code-hooks-branch-guard",
+    "purposeCategory": "Safety",
+    "lifecycleEvent": "PreToolUse"
+  },
+  {
+    "name": "ci-trigger",
+    "githubRepoUrl": "https://github.com/anthropics/claude-code-hooks-ci-trigger",
+    "purposeCategory": "Automation",
+    "lifecycleEvent": "Stop"
+  },
+  {
+    "name": "custom-metrics",
+    "githubRepoUrl": "https://github.com/anthropics/claude-code-hooks-custom-metrics",
+    "purposeCategory": "Custom",
+    "lifecycleEvent": "Stop"
+  }
+]
