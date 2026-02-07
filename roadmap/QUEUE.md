@@ -2,8 +2,8 @@
 
 ## Next Up
 
-1. **Generate phase plans** — Run `/plan-phase-tasks` for PHASE-1 through PHASE-6 (use `--has-ui` for MVP phases with UI stories)
-2. **MVP implementation** — Feed PHASE-1-PLAN.md into `superpowers:writing-plans` → `superpowers:executing-plans`
+1. **Run `/charter-to-superpower 1`** — Start Phase 1 execution (worktree → plan groups → execute → finish)
+2. **Generate remaining phase plans** — `/plan-phase-task` for PHASE-2 through PHASE-6 (`--has-ui` for 2, 3)
 3. **Curate initial hook catalog** — Source 15-25 hooks from awesome-claude-code for `data/hooks.json` (TRANS-01)
 
 ## Backlog
@@ -15,6 +15,8 @@
 
 ## Recently Completed
 
-- ✅ **`/plan-phase-tasks` skill built** — SKILL.md (366 lines), template, slash command. Validation + self-verification passed. Committed to claude-forge (`e61c3ad`)
-- ✅ **UX expertise skill built** — Prior session
-- ✅ **Spec review round 8** — 8 issues: 1 fixed (wave metadata extraction), 5 invalid/skipped, 2 downstream (superpowers integration)
+- ✅ **`charter-to-superpowers` skill built** — 302 lines, simple pattern, self-verification PASS, committed to claude-forge (`26d82b9`)
+- ✅ **Command naming convention enforced** — Skill=plural, command=singular (`charter-to-superpower`, `plan-phase-task`)
+- ✅ **`charter-to-superpowers` spec written and hardened** — 396 lines, 7-state machine, 2 full review rounds, 99%+ confidence
+- ✅ **PHASE-1-PLAN.md generated** — 8 stories, 20 tasks, 3 execution groups (walking skeleton)
+- ✅ **`/plan-phase-task` skill built** — SKILL.md (366 lines), template, slash command. Committed to claude-forge (`e61c3ad`)

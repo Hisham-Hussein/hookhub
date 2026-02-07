@@ -2,57 +2,55 @@
 
 ## Current Focus
 
-Generate phase plans (PHASE-1 through PHASE-6) using the newly built `/plan-phase-tasks` skill, then begin MVP implementation.
+Drive MVP implementation starting with Phase 1 using the charter-to-superpowers bridge skill.
 
 ## Success Criteria
 
-- [x] Fix Issue 6: Add invocation model paragraph to Leg 2 spec
-- [x] Fix Issue 11: Define PHASE-N-PLAN.md template header and section order
-- [x] `.charter/DESIGN-TOKENS.md` created from iSemantics brand guidelines
-- [x] Spec review rounds 3-8 complete (56 issues total: 20 fixed, 28 invalid, 8 other)
-- [x] `generate-section-manifest.py` built and verified (100% story coverage)
-- [x] `/plan-phase-tasks` skill designed and built via `/create-agent-skills`
-- [x] UX expertise skill built (prior session)
-- [ ] Phase plans produced (PHASE-N-PLAN.md per slice)
-- [ ] MVP implementation started
+- [x] `/plan-phase-task` skill designed and built
+- [x] PHASE-1-PLAN.md generated (8 stories, 20 tasks, 3 execution groups)
+- [x] `charter-to-superpowers` spec written and reviewed (2 full review rounds, 99%+ confidence)
+- [x] `charter-to-superpowers` skill built via `taches-cc-resources:create-agent-skills`
+- [ ] Remaining phase plans produced (PHASE-2 through PHASE-6)
+- [ ] MVP implementation started (Phase 1 walking skeleton)
 
 ## Progress
 
 ### Last Session (this one)
 
-- Built `/plan-phase-tasks` skill: SKILL.md (366 lines, simple pattern), `templates/phase-plan-template.md`, slash command
-- Validation script passed, self-verification subagent PASS on all 7 checks
-- Committed to claude-forge master (`e61c3ad`), pushed, synced cache
-- Files created:
-  - `~/.claude/plugins/marketplaces/claude-forge/skills/plan-phase-tasks/SKILL.md`
-  - `~/.claude/plugins/marketplaces/claude-forge/skills/plan-phase-tasks/templates/phase-plan-template.md`
-  - `~/.claude/plugins/marketplaces/claude-forge/commands/plan-phase-tasks.md`
+- Built `charter-to-superpowers` skill (302 lines, simple pattern, 7-state machine) via `taches-cc-resources:create-agent-skills`
+- Validation script: clean pass. Basic test: correctly detected State 1 for Phase 1. Self-verification: PASS on all 7 checks.
+- Placed skill in claude-forge plugin (`~/.claude/plugins/marketplaces/claude-forge/skills/charter-to-superpowers/`)
+- Enforced naming convention: skill=plural (`charter-to-superpowers`, `plan-phase-tasks`), command=singular (`charter-to-superpower`, `plan-phase-task`)
+- Committed and pushed to claude-forge master (`26d82b9`)
 
 ### Not Started
 
-- Generate phase plans (PHASE-1 through PHASE-6)
+- Generate PHASE-2 through PHASE-6 plans
 - MVP implementation
 
 ## How to Continue
 
-### Step 1: Generate phase plans
+### Step 1: Start Phase 1 execution
 
-Run `/plan-phase-tasks` for each phase. MVP phases (1-3) have UI stories, so use `--has-ui`:
+In a fresh session:
 
 ```
-/plan-phase-tasks 1 --has-ui
-/plan-phase-tasks 2 --has-ui
-/plan-phase-tasks 3 --has-ui
-/plan-phase-tasks 4
-/plan-phase-tasks 5
-/plan-phase-tasks 6
+/charter-to-superpower 1
 ```
 
-Wave 1 (PHASE-1) must be planned first (walking skeleton). Wave 2 phases (2, 3) can be planned in parallel. Check `.charter/ROADMAP.md` for wave groupings.
+This will detect State 1 (PHASE-1-PLAN.md exists, no worktree) and guide through: worktree creation → planning Group 1 → execution → Group 2 → ... → finish.
 
-### Step 2: Begin MVP implementation
+### Step 2: Generate remaining phase plans
 
-Feed PHASE-1-PLAN.md into `superpowers:writing-plans` → `superpowers:executing-plans` for TDD execution.
+Run `/plan-phase-task` for phases 2-6 (can be done in parallel with Phase 1 execution):
+
+```
+/plan-phase-task 2 --has-ui
+/plan-phase-task 3 --has-ui
+/plan-phase-task 4
+/plan-phase-task 5
+/plan-phase-task 6
+```
 
 ## Blockers
 
@@ -62,10 +60,9 @@ None.
 
 | Artifact | Path | Status |
 |----------|------|--------|
-| `/plan-phase-tasks` skill | `~/.claude/plugins/marketplaces/claude-forge/skills/plan-phase-tasks/` | **Built** — SKILL.md + template + 2 scripts (149 tests) |
-| Skill Design Spec | `roadmap/SKILL-DESIGN-PLAN-PHASE-TASKS.md` | Complete — 8 review rounds, 56 issues resolved |
+| Bridge Skill | `~/.claude/plugins/marketplaces/claude-forge/skills/charter-to-superpowers/` | **Built** — 302 lines, committed (`26d82b9`) |
+| Phase 1 Plan | `.charter/PHASE-1-PLAN.md` | **Complete** — 8 stories, 20 tasks, 3 execution groups |
+| `/plan-phase-task` skill | `~/.claude/plugins/marketplaces/claude-forge/skills/plan-phase-tasks/` | **Built** |
 | Roadmap | `.charter/ROADMAP.md` | Complete (6 phases, 3 releases) |
-| Architecture | `.charter/ARCHITECTURE-DOC.md` | Complete (uses "Adapters" layer name) |
-| User Stories | `.charter/USER-STORIES.md` | Complete |
-| Design Tokens | `.charter/DESIGN-TOKENS.md` | Complete |
+| Architecture | `.charter/ARCHITECTURE-DOC.md` | Complete |
 | Design OS Export | `.charter/design-os-export/` | Complete |

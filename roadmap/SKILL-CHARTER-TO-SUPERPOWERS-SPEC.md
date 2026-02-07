@@ -85,9 +85,11 @@ Plan Execution Group {G} stories only: {story-list}.
 The phase plan has the full FDD task decomposition with I/O/Test
 per task and Design OS section references for UI tasks.
 Focus on these stories: {story-ids with names}.
+Include the story ID prefix in each commit message
+(e.g., "feat(US-001): add HeroBanner component").
 ```
 
-If no Design OS export (UX Inputs Loaded is "N/A" or "No"), omit the UI Reference line.
+Only include the `UI Reference` line when `UX Inputs Loaded` contains "Design OS export" (i.e., the `.charter/design-os-export/` directory exists). For all other values — fallback UX path ("Yes — UX-DESIGN-PLAN.md..."), "No", or "N/A" — omit the line. In the fallback case, plan-phase-tasks already embedded the relevant UX specs inline in each task's Input field, so the phase plan is self-contained.
 
 ### State 3: Current group planned, needs execution
 
@@ -109,40 +111,80 @@ Plan: docs/plans/{plan-filename}
 Execute tasks for {story-id}: {story-name}
 ```
 
+**[If this is NOT the last execution group:]** Add this WARNING inside the code block above:
+```
+WARNING: subagent-driven-development will invoke finishing-a-development-branch
+when done. It will detect "main" as the base branch (not the phase branch).
+Choose Option 3 "Keep the branch as-is" — do NOT merge or create a PR.
+More execution groups remain after this one.
+```
+
 **If current group has 2+ stories (parallel):**
 ```
-Next step: Execute {N} stories. Two options:
+Next step: Execute {N} stories in Execution Group {G}. Two options:
 
 OPTION A — Sequential (safe, one session):
-Run each story one at a time using subagent-driven-development:
+Run subagent-driven-development ONCE with the full group plan.
+All tasks across all {N} stories execute sequentially in a single session.
+
+IMPORTANT: Do NOT invoke subagent-driven-development multiple times
+(once per story) with the same plan. TodoWrite progress tracking is
+per-session — re-invoking loses state and causes duplicate work.
 
 /superpowers:subagent-driven-development
 
 Plan: docs/plans/{plan-filename}
-Execute tasks for {story-id}: {story-name}
 
-Then repeat for: {remaining stories}
+[If this is NOT the last execution group:]
+WARNING: subagent-driven-development will invoke finishing-a-development-branch
+when done. It will detect "main" as the base branch (not the phase branch).
+Choose Option 3 "Keep the branch as-is" — do NOT merge or create a PR.
+More execution groups remain after this one.
 
 OPTION B — Parallel (faster, multiple sessions):
-Create a separate worktree per story, then run executing-plans
-in each:
+Prerequisite: commit the group plan so sub-worktrees can access it:
 
-git worktree add .worktrees/{story-slug} -b feat/{story-slug}
+git add docs/plans/{plan-filename}
+git commit -m "Add Execution Group {G} implementation plan"
 
-Then in each worktree session:
+Then create a separate worktree per story:
+
+git worktree add .worktrees/{story-1-slug} -b feat/{story-1-slug}
+git worktree add .worktrees/{story-2-slug} -b feat/{story-2-slug}
+...
+
+In each worktree session, run executing-plans scoped to ONE story:
 
 /superpowers:executing-plans
 
 Plan: docs/plans/{plan-filename}
-Execute tasks for {story-id}: {story-name}
+Execute ONLY the tasks for {story-id}: {story-name}.
+Skip all other stories in this plan.
 
-After all complete, merge branches into the phase branch.
+WARNING: executing-plans will invoke finishing-a-development-branch
+when done. It will detect "main" as the base branch (not the phase
+branch). Choose Option 3 "Keep the branch as-is" — do NOT merge
+or create a PR. The manual merge into the phase branch happens below.
+
+After ALL story branches complete, merge them into the phase branch:
+
+cd {phase-worktree-path}
+git merge feat/{story-1-slug}
+git merge feat/{story-2-slug}
+...
+
+If merge conflicts occur, resolve before merging the next branch.
+Then clean up sub-worktrees:
+
+git worktree remove .worktrees/{story-1-slug}
+git worktree remove .worktrees/{story-2-slug}
+...
 
 Stories in this group:
 {list of stories with IDs and names}
 ```
 
-**Why two options for parallel groups:** `subagent-driven-development` explicitly prohibits dispatching multiple implementation subagents in parallel (file conflicts). Separate worktrees per story provide true isolation but add merge complexity. Let the user choose based on their comfort level.
+**Why two options for parallel groups:** `subagent-driven-development` processes an entire plan file sequentially and tracks progress via per-session TodoWrite — it cannot be invoked multiple times per story from the same plan. Option A runs all tasks in one session. Option B isolates stories in separate worktrees with `executing-plans`, which supports human checkpoints and can be scoped to specific tasks via the prompt. Option B adds merge complexity but enables true parallel execution across sessions.
 
 ### State 4: Current group done, more groups remain
 
@@ -273,14 +315,30 @@ git worktree list | grep "phase-{N}"
 ```
 
 ### Plan Detection
+
+**DO NOT match by filename pattern.** writing-plans saves files as `docs/plans/YYYY-MM-DD-<feature-name>.md` where `<feature-name>` is a slug it derives internally — we don't control it. Use content-based detection instead: grep each plan file for the current group's story IDs.
+
 ```bash
-# Check docs/plans/ in the worktree (plans are created there, not in main repo)
-# Use the worktree path from worktree detection
 WORKTREE=$(git worktree list | grep "phase-{N}" | awk '{print $1}')
-ls "$WORKTREE"/docs/plans/*phase-{N}* 2>/dev/null
-ls "$WORKTREE"/docs/plans/*group-{G}* 2>/dev/null
+
+# Content-based: find the plan file that contains ALL story IDs for the current group.
+# A group's plan will reference its story IDs in the task breakdowns.
+# Example for Group 2 with stories US-001, US-004, US-006, US-013:
+for plan in "$WORKTREE"/docs/plans/*.md; do
+  if grep -q "US-001" "$plan" && grep -q "US-004" "$plan" && \
+     grep -q "US-006" "$plan" && grep -q "US-013" "$plan"; then
+    echo "Group 2 plan: $plan"
+  fi
+done
 ```
-Note: writing-plans saves files as `docs/plans/YYYY-MM-DD-<feature-name>.md`. Match by date + phase slug, not exact name.
+
+**Why content-based:** Plan files will always contain their stories' IDs (in task headings, commit messages, etc.) regardless of filename. This survives file renames, regeneration (Edge Case 7), and pre-existing unrelated plans in `docs/plans/`.
+
+**Fallback:** If no file matches all story IDs for the current group, ask the user:
+```
+Could not auto-detect the plan file for Execution Group {G}.
+Which file in docs/plans/ is the plan for {story-list}?
+```
 
 ### Execution Group Tracking
 Parse the phase plan's `## Parallelism Analysis` section to extract execution groups. For each group, determine completion:
