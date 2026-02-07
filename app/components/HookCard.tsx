@@ -41,7 +41,7 @@ const HookCard = ({ hook }: HookCardProps) => {
         </a>
       </h3>
 
-      {/* Badges: category (sky) + lifecycle event (indigo) */}
+      {/* Badges: category (per-category color) + lifecycle event (indigo) */}
       <div className="flex gap-2 flex-wrap">
         <span className={`relative z-10 inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-light border ${categoryStyle.badgeColor} ${categoryStyle.textColor} tracking-wide`}>
           {hook.purposeCategory}
