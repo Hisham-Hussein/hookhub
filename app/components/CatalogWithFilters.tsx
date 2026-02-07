@@ -11,15 +11,19 @@ interface CatalogWithFiltersProps {
 
 const CatalogWithFilters = ({ hooks }: CatalogWithFiltersProps) => {
   const [filteredHooks, setFilteredHooks] = useState<Hook[]>(hooks)
+  const [gridKey, setGridKey] = useState('all')
 
-  const handleFilterChange = useCallback((filtered: Hook[]) => {
+  const handleFilterChange = useCallback((filtered: Hook[], key: string) => {
     setFilteredHooks(filtered)
+    setGridKey(key)
   }, [])
 
   return (
     <>
       <FilterBar hooks={hooks} onFilterChange={handleFilterChange} />
-      <HookGrid hooks={filteredHooks} />
+      <div key={gridKey} className="motion-safe:animate-fade-in">
+        <HookGrid hooks={filteredHooks} />
+      </div>
     </>
   )
 }

@@ -8,7 +8,7 @@ import type { FilterState } from '@/lib/domain/filter'
 
 interface FilterBarProps {
   hooks: Hook[]
-  onFilterChange: (filteredHooks: Hook[]) => void
+  onFilterChange: (filteredHooks: Hook[], key: string) => void
 }
 
 const selectedCategoryStyles =
@@ -34,7 +34,7 @@ const FilterBar = ({ hooks, onFilterChange }: FilterBarProps) => {
   const filteredHooks = useMemo(() => filterHooks(hooks, filterState), [hooks, filterState])
 
   useEffect(() => {
-    onFilterChange(filteredHooks)
+    onFilterChange(filteredHooks, filterState.category ?? 'all')
   }, [filteredHooks, onFilterChange])
 
   const handleCategorySelect = useCallback((value: PurposeCategory | null, index: number) => {
