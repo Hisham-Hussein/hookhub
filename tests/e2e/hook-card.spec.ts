@@ -9,13 +9,13 @@ test.describe('HookCard', () => {
     test('displays hook name as a heading', async ({ page }) => {
       const h3 = page.locator('article h3').first()
       await expect(h3).toBeVisible()
-      await expect(h3).toContainText('safe-rm')
+      await expect(h3).toContainText('claude-code-hooks-mastery')
     })
 
     test('hook name is wrapped in a link', async ({ page }) => {
       const link = page.locator('article h3 a').first()
       await expect(link).toBeVisible()
-      await expect(link).toHaveAttribute('href', 'https://github.com/devtools-org/safe-rm-hook')
+      await expect(link).toHaveAttribute('href', 'https://github.com/disler/claude-code-hooks-mastery')
     })
 
     test('link opens in new tab with security attributes', async ({ page }) => {
@@ -37,11 +37,11 @@ test.describe('HookCard', () => {
     test('displays hook description', async ({ page }) => {
       const description = page.locator('article p').first()
       await expect(description).toBeVisible()
-      await expect(description).toContainText('Prevents accidental deletion')
+      await expect(description).toContainText('Master Claude Code Hooks')
     })
 
     test('displays formatted star count', async ({ page }) => {
-      await expect(page.locator('article').first()).toContainText('1.2k')
+      await expect(page.locator('article').first()).toContainText('523')
     })
 
     test('displays GitHub external link indicator', async ({ page }) => {
@@ -66,9 +66,9 @@ test.describe('HookCard', () => {
 
       // Spot-check known card-to-URL mappings from sample data
       const nameToUrl: Record<string, string> = {
-        'safe-rm': 'https://github.com/devtools-org/safe-rm-hook',
-        'secret-scanner': 'https://github.com/sec-hooks/secret-scanner',
-        'branch-guard': 'https://github.com/safety-hooks/branch-guard',
+        'claude-code-hooks-mastery': 'https://github.com/disler/claude-code-hooks-mastery',
+        'tdd-guard': 'https://github.com/nizos/tdd-guard',
+        'claudekit': 'https://github.com/carlrannaberg/claudekit',
       }
       for (const [name, expectedUrl] of Object.entries(nameToUrl)) {
         const card = page.locator('article', { has: page.locator(`h3:has-text("${name}")`) })
@@ -87,7 +87,7 @@ test.describe('HookCard', () => {
     test('star count has accessible label', async ({ page }) => {
       const starSpan = page.locator('article span[aria-label*="GitHub stars"]').first()
       await expect(starSpan).toBeAttached()
-      await expect(starSpan).toHaveAttribute('aria-label', '1,247 GitHub stars')
+      await expect(starSpan).toHaveAttribute('aria-label', '523 GitHub stars')
     })
 
     test('card is one tab stop (stretched link pattern)', async ({ page }) => {

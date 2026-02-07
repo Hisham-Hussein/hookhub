@@ -35,9 +35,9 @@ test.describe('FilterBar — Category Filtering (US-013)', () => {
       const safetyChip = page.locator('[role="radiogroup"][aria-label="Filter by purpose category"] button[role="radio"]').filter({ hasText: 'Safety' })
       await safetyChip.click()
 
-      // Safety hooks in sample data: safe-rm, prompt-guard, branch-guard
+      // Safety hooks in sample data: claude-code-hooks-mastery, claude-code-hook-templates
       const cards = page.locator('article')
-      await expect(cards).toHaveCount(3)
+      await expect(cards).toHaveCount(2)
       await expect(safetyChip).toHaveAttribute('aria-checked', 'true')
     })
 
@@ -49,7 +49,7 @@ test.describe('FilterBar — Category Filtering (US-013)', () => {
       // Filter to Safety
       const safetyChip = page.locator('[role="radiogroup"][aria-label="Filter by purpose category"] button[role="radio"]').filter({ hasText: 'Safety' })
       await safetyChip.click()
-      await expect(status).toContainText('Showing 3 hooks')
+      await expect(status).toContainText('Showing 2 hooks')
     })
 
     test('clicking All chip resets to show all hooks', async ({ page }) => {
@@ -58,7 +58,7 @@ test.describe('FilterBar — Category Filtering (US-013)', () => {
 
       // Select Safety
       await safetyChip.click()
-      await expect(page.locator('article')).toHaveCount(3)
+      await expect(page.locator('article')).toHaveCount(2)
 
       // Click All to deselect
       await allChip.click()
@@ -91,7 +91,7 @@ test.describe('FilterBar — Category Filtering (US-013)', () => {
       const urlBefore = page.url()
 
       await safetyChip.click()
-      await expect(page.locator('article')).toHaveCount(3)
+      await expect(page.locator('article')).toHaveCount(2)
 
       // URL should remain the same — no full page navigation
       expect(page.url()).toBe(urlBefore)
@@ -189,9 +189,9 @@ test.describe('FilterBar — Category Filtering (US-013)', () => {
       await chips.first().focus()
       await page.keyboard.press('ArrowRight')
 
-      // Grid should now show only Safety hooks (3)
-      await expect(page.locator('article')).toHaveCount(3)
-      await expect(page.locator('[role="status"]')).toContainText('Showing 3 hooks')
+      // Grid should now show only Safety hooks (2)
+      await expect(page.locator('article')).toHaveCount(2)
+      await expect(page.locator('[role="status"]')).toContainText('Showing 2 hooks')
     })
   })
 })

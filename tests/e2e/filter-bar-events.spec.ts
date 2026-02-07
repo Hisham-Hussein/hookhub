@@ -75,15 +75,15 @@ test.describe('FilterBar — Lifecycle Event Filtering (US-015)', () => {
   })
 
   test.describe('AND-intersection with category filter', () => {
-    test('Safety + PreToolUse shows intersection only (2 hooks)', async ({ page }) => {
+    test('Safety + PreToolUse shows intersection only (1 hook)', async ({ page }) => {
       const safetyChip = page.locator('[role="radiogroup"][aria-label="Filter by purpose category"] button[role="radio"]').filter({ hasText: 'Safety' })
       const preToolChip = page.locator('[role="radiogroup"][aria-label="Filter by lifecycle event"] button[role="radio"]').filter({ hasText: 'PreToolUse' })
 
       await safetyChip.click()
       await preToolChip.click()
 
-      await expect(page.locator('article')).toHaveCount(2)
-      await expect(page.locator('[role="status"]')).toContainText('Showing 2 hooks')
+      await expect(page.locator('article')).toHaveCount(1)
+      await expect(page.locator('[role="status"]')).toContainText('Showing 1 hook')
     })
 
     test('Formatting + PostToolUse shows intersection (2 hooks)', async ({ page }) => {
@@ -103,10 +103,10 @@ test.describe('FilterBar — Lifecycle Event Filtering (US-015)', () => {
 
       await safetyChip.click()
       await preToolChip.click()
-      await expect(page.locator('article')).toHaveCount(2)
+      await expect(page.locator('article')).toHaveCount(1)
 
       await allEventChip.click()
-      await expect(page.locator('article')).toHaveCount(3)
+      await expect(page.locator('article')).toHaveCount(2)
     })
 
     test('deselecting category restores event-only filter', async ({ page }) => {
@@ -116,7 +116,7 @@ test.describe('FilterBar — Lifecycle Event Filtering (US-015)', () => {
 
       await safetyChip.click()
       await preToolChip.click()
-      await expect(page.locator('article')).toHaveCount(2)
+      await expect(page.locator('article')).toHaveCount(1)
 
       await allCatChip.click()
       await expect(page.locator('article')).toHaveCount(3)

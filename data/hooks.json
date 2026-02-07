@@ -1,80 +1,80 @@
 [
   {
-    "name": "safe-rm",
-    "githubRepoUrl": "https://github.com/anthropics/claude-code-hooks-safe-rm",
+    "name": "claude-code-hooks-mastery",
+    "githubRepoUrl": "https://github.com/disler/claude-code-hooks-mastery",
     "purposeCategory": "Safety",
     "lifecycleEvent": "PreToolUse"
   },
   {
-    "name": "auto-prettier",
-    "githubRepoUrl": "https://github.com/anthropics/claude-code-hooks-auto-prettier",
-    "purposeCategory": "Formatting",
-    "lifecycleEvent": "PostToolUse"
-  },
-  {
-    "name": "slack-notify",
-    "githubRepoUrl": "https://github.com/anthropics/claude-code-hooks-slack-notify",
-    "purposeCategory": "Notification",
-    "lifecycleEvent": "Stop"
-  },
-  {
-    "name": "test-on-save",
-    "githubRepoUrl": "https://github.com/anthropics/claude-code-hooks-test-on-save",
+    "name": "tdd-guard",
+    "githubRepoUrl": "https://github.com/nizos/tdd-guard",
     "purposeCategory": "Testing",
-    "lifecycleEvent": "PostToolUse"
+    "lifecycleEvent": "PreToolUse"
   },
   {
-    "name": "secret-scanner",
-    "githubRepoUrl": "https://github.com/anthropics/claude-code-hooks-secret-scanner",
+    "name": "claudekit",
+    "githubRepoUrl": "https://github.com/carlrannaberg/claudekit",
     "purposeCategory": "Security",
     "lifecycleEvent": "PreToolUse"
   },
   {
-    "name": "git-auto-stage",
-    "githubRepoUrl": "https://github.com/anthropics/claude-code-hooks-git-auto-stage",
-    "purposeCategory": "Automation",
-    "lifecycleEvent": "PostToolUse"
-  },
-  {
-    "name": "change-ledger",
-    "githubRepoUrl": "https://github.com/anthropics/claude-code-hooks-change-ledger",
-    "purposeCategory": "Logging",
-    "lifecycleEvent": "PostToolUse"
-  },
-  {
-    "name": "prompt-guard",
-    "githubRepoUrl": "https://github.com/anthropics/claude-code-hooks-prompt-guard",
+    "name": "claude-code-hook-templates",
+    "githubRepoUrl": "https://github.com/iamrajiv/claude-code-hook-templates",
     "purposeCategory": "Safety",
     "lifecycleEvent": "UserPromptSubmit"
   },
   {
-    "name": "session-recap",
-    "githubRepoUrl": "https://github.com/anthropics/claude-code-hooks-session-recap",
-    "purposeCategory": "Custom",
-    "lifecycleEvent": "Notification"
-  },
-  {
-    "name": "eslint-autofix",
-    "githubRepoUrl": "https://github.com/anthropics/claude-code-hooks-eslint-autofix",
+    "name": "britfix",
+    "githubRepoUrl": "https://github.com/Talieisin/britfix",
     "purposeCategory": "Formatting",
     "lifecycleEvent": "PostToolUse"
   },
   {
-    "name": "branch-guard",
-    "githubRepoUrl": "https://github.com/anthropics/claude-code-hooks-branch-guard",
-    "purposeCategory": "Safety",
-    "lifecycleEvent": "PreToolUse"
+    "name": "claude-hooks",
+    "githubRepoUrl": "https://github.com/decider/claude-hooks",
+    "purposeCategory": "Formatting",
+    "lifecycleEvent": "PostToolUse"
   },
   {
-    "name": "ci-trigger",
-    "githubRepoUrl": "https://github.com/anthropics/claude-code-hooks-ci-trigger",
+    "name": "claude-code-typescript-hooks",
+    "githubRepoUrl": "https://github.com/bartolli/claude-code-typescript-hooks",
+    "purposeCategory": "Testing",
+    "lifecycleEvent": "PostToolUse"
+  },
+  {
+    "name": "claude-hook-comms",
+    "githubRepoUrl": "https://github.com/aannoo/claude-hook-comms",
+    "purposeCategory": "Automation",
+    "lifecycleEvent": "PostToolUse"
+  },
+  {
+    "name": "claude-code-showcase",
+    "githubRepoUrl": "https://github.com/ChrisWiles/claude-code-showcase",
     "purposeCategory": "Automation",
     "lifecycleEvent": "Stop"
   },
   {
-    "name": "custom-metrics",
-    "githubRepoUrl": "https://github.com/anthropics/claude-code-hooks-custom-metrics",
-    "purposeCategory": "Custom",
+    "name": "cc-notify",
+    "githubRepoUrl": "https://github.com/dazuiba/CCNotify",
+    "purposeCategory": "Notification",
+    "lifecycleEvent": "Notification"
+  },
+  {
+    "name": "claudio",
+    "githubRepoUrl": "https://github.com/ctoth/claudio",
+    "purposeCategory": "Notification",
     "lifecycleEvent": "Stop"
+  },
+  {
+    "name": "multi-agent-observability",
+    "githubRepoUrl": "https://github.com/disler/claude-code-hooks-multi-agent-observability",
+    "purposeCategory": "Logging",
+    "lifecycleEvent": "PostToolUse"
+  },
+  {
+    "name": "claude-hooks-ts",
+    "githubRepoUrl": "https://github.com/johnlindquist/claude-hooks",
+    "purposeCategory": "Custom",
+    "lifecycleEvent": "PostToolUse"
   }
 ]

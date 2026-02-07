@@ -23,7 +23,7 @@ test.describe('HookGrid — responsive hook catalog grid', () => {
     const headings = page.locator('section[aria-label="Hook catalog"] h3')
     await expect(headings.first()).toBeVisible()
     // Check first and last hook names from sample data
-    await expect(headings.first()).toContainText('safe-rm')
+    await expect(headings.first()).toContainText('claude-code-hooks-mastery')
   })
 
   test('grid uses CSS Grid layout', async ({ page }) => {
