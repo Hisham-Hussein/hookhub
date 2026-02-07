@@ -114,10 +114,11 @@ test.describe('HookCard', () => {
   test.describe('typography and styling', () => {
     test('hook name uses Poppins font family (font-headline)', async ({ page }) => {
       const h3 = page.locator('article h3').first()
-      const fontFamily = await h3.evaluate((el) =>
-        window.getComputedStyle(el).fontFamily
-      )
-      expect(fontFamily.toLowerCase()).toContain('poppins')
+      await expect(h3).toBeVisible()
+      await expect.poll(async () => {
+        const ff = await h3.evaluate((el) => window.getComputedStyle(el).fontFamily)
+        return ff.toLowerCase()
+      }).toContain('poppins')
     })
 
     test('hook name font weight is light (300)', async ({ page }) => {

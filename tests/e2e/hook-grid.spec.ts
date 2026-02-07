@@ -3,6 +3,8 @@ import { test, expect } from '@playwright/test'
 test.describe('HookGrid — responsive hook catalog grid', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/')
+    // Wait for grid content to render (async Server Component loads data)
+    await expect(page.locator('section[aria-label="Hook catalog"] li').first()).toBeVisible()
   })
 
   test('renders a section with "Hook catalog" aria-label', async ({ page }) => {
@@ -25,52 +27,50 @@ test.describe('HookGrid — responsive hook catalog grid', () => {
   })
 
   test('grid uses CSS Grid layout', async ({ page }) => {
-    const grid = page.locator('section[aria-label="Hook catalog"] > ul')
-    const display = await grid.evaluate((el) => getComputedStyle(el).display)
-    expect(display).toBe('grid')
+    const grid = page.locator('section[aria-label="Hook catalog"] ul')
+    await expect.poll(async () =>
+      grid.evaluate((el) => getComputedStyle(el).display)
+    ).toBe('grid')
   })
 
   test('desktop viewport (1280px): grid has 4 columns', async ({ page }) => {
     await page.setViewportSize({ width: 1280, height: 800 })
-    const grid = page.locator('section[aria-label="Hook catalog"] > ul')
-    const columns = await grid.evaluate((el) =>
-      getComputedStyle(el).gridTemplateColumns.split(' ').length
-    )
-    expect(columns).toBe(4)
+    const grid = page.locator('section[aria-label="Hook catalog"] ul')
+    await expect.poll(async () =>
+      grid.evaluate((el) => getComputedStyle(el).gridTemplateColumns.split(' ').length)
+    ).toBe(4)
   })
 
   test('large viewport (1024px): grid has 3 columns', async ({ page }) => {
     await page.setViewportSize({ width: 1024, height: 800 })
-    const grid = page.locator('section[aria-label="Hook catalog"] > ul')
-    const columns = await grid.evaluate((el) =>
-      getComputedStyle(el).gridTemplateColumns.split(' ').length
-    )
-    expect(columns).toBe(3)
+    const grid = page.locator('section[aria-label="Hook catalog"] ul')
+    await expect.poll(async () =>
+      grid.evaluate((el) => getComputedStyle(el).gridTemplateColumns.split(' ').length)
+    ).toBe(3)
   })
 
   test('tablet viewport (768px): grid has 2 columns', async ({ page }) => {
     await page.setViewportSize({ width: 768, height: 800 })
-    const grid = page.locator('section[aria-label="Hook catalog"] > ul')
-    const columns = await grid.evaluate((el) =>
-      getComputedStyle(el).gridTemplateColumns.split(' ').length
-    )
-    expect(columns).toBe(2)
+    const grid = page.locator('section[aria-label="Hook catalog"] ul')
+    await expect.poll(async () =>
+      grid.evaluate((el) => getComputedStyle(el).gridTemplateColumns.split(' ').length)
+    ).toBe(2)
   })
 
   test('mobile viewport (375px): grid has 1 column', async ({ page }) => {
     await page.setViewportSize({ width: 375, height: 800 })
-    const grid = page.locator('section[aria-label="Hook catalog"] > ul')
-    const columns = await grid.evaluate((el) =>
-      getComputedStyle(el).gridTemplateColumns.split(' ').length
-    )
-    expect(columns).toBe(1)
+    const grid = page.locator('section[aria-label="Hook catalog"] ul')
+    await expect.poll(async () =>
+      grid.evaluate((el) => getComputedStyle(el).gridTemplateColumns.split(' ').length)
+    ).toBe(1)
   })
 
   test('grid items have consistent spacing (gap)', async ({ page }) => {
-    const grid = page.locator('section[aria-label="Hook catalog"] > ul')
+    const grid = page.locator('section[aria-label="Hook catalog"] ul')
+    await expect.poll(async () =>
+      grid.evaluate((el) => getComputedStyle(el).gap)
+    ).toBeTruthy()
     const gap = await grid.evaluate((el) => getComputedStyle(el).gap)
-    // gap-4 = 16px in Tailwind
-    expect(gap).toBeTruthy()
     expect(gap).not.toBe('normal')
   })
 
