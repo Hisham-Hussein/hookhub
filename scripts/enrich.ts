@@ -19,24 +19,6 @@ export async function runEnrichment(): Promise<{
   })
 
   await mkdir(dirname(OUTPUT_PATH), { recursive: true })
-
-  // Don't overwrite existing data when enrichment yields nothing
-  // (e.g., all manifest repos are unreachable/fictional)
-  if (result.hooks.length === 0) {
-    const { readFile } = await import('fs/promises')
-    try {
-      const existing = JSON.parse(await readFile(OUTPUT_PATH, 'utf-8'))
-      if (Array.isArray(existing) && existing.length > 0) {
-        console.warn(
-          `Enrichment produced 0 hooks but ${OUTPUT_PATH} has ${existing.length} — preserving existing data.`
-        )
-        return { summary: result.summary, success: true }
-      }
-    } catch {
-      // No existing file or invalid JSON — proceed with write
-    }
-  }
-
   await writeFile(OUTPUT_PATH, JSON.stringify(result.hooks, null, 2), 'utf-8')
 
   console.log(result.summary)
