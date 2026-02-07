@@ -7,19 +7,19 @@ test.describe('HookCard', () => {
 
   test.describe('content rendering', () => {
     test('displays hook name as a heading', async ({ page }) => {
-      const h3 = page.locator('article h3')
+      const h3 = page.locator('article h3').first()
       await expect(h3).toBeVisible()
       await expect(h3).toContainText('safe-rm')
     })
 
     test('hook name is wrapped in a link', async ({ page }) => {
-      const link = page.locator('article h3 a')
+      const link = page.locator('article h3 a').first()
       await expect(link).toBeVisible()
       await expect(link).toHaveAttribute('href', 'https://github.com/devtools-org/safe-rm-hook')
     })
 
     test('link opens in new tab with security attributes', async ({ page }) => {
-      const link = page.locator('article h3 a')
+      const link = page.locator('article h3 a').first()
       await expect(link).toHaveAttribute('target', '_blank')
       await expect(link).toHaveAttribute('rel', 'noopener noreferrer')
     })
@@ -35,28 +35,28 @@ test.describe('HookCard', () => {
     })
 
     test('displays hook description', async ({ page }) => {
-      const description = page.locator('article p')
+      const description = page.locator('article p').first()
       await expect(description).toBeVisible()
       await expect(description).toContainText('Prevents accidental deletion')
     })
 
     test('displays formatted star count', async ({ page }) => {
-      await expect(page.locator('article')).toContainText('1.2k')
+      await expect(page.locator('article').first()).toContainText('1.2k')
     })
 
     test('displays GitHub external link indicator', async ({ page }) => {
-      await expect(page.locator('article')).toContainText('GitHub')
+      await expect(page.locator('article').first()).toContainText('GitHub')
     })
   })
 
   test.describe('accessibility', () => {
     test('card uses article element', async ({ page }) => {
-      const article = page.locator('article')
+      const article = page.locator('article').first()
       await expect(article).toBeAttached()
     })
 
     test('star count has accessible label', async ({ page }) => {
-      const starSpan = page.locator('article span[aria-label*="GitHub stars"]')
+      const starSpan = page.locator('article span[aria-label*="GitHub stars"]').first()
       await expect(starSpan).toBeAttached()
       await expect(starSpan).toHaveAttribute('aria-label', '1,247 GitHub stars')
     })
@@ -69,20 +69,22 @@ test.describe('HookCard', () => {
       const focused = page.locator(':focus')
       await expect(focused).toBeAttached()
       // The focused element should be inside an article
-      const article = page.locator('article:focus-within')
+      const article = page.locator('article:focus-within').first()
       await expect(article).toBeAttached()
     })
 
     test('star icon SVGs are hidden from screen readers', async ({ page }) => {
-      const hiddenSvgs = page.locator('article svg[aria-hidden="true"]')
+      // Check the first card has at least 2 hidden SVGs (star + arrow icons)
+      const firstCard = page.locator('article').first()
+      const hiddenSvgs = firstCard.locator('svg[aria-hidden="true"]')
       const count = await hiddenSvgs.count()
-      expect(count).toBeGreaterThanOrEqual(2) // star icon + arrow icon
+      expect(count).toBeGreaterThanOrEqual(2)
     })
   })
 
   test.describe('typography and styling', () => {
     test('hook name uses Poppins font family (font-headline)', async ({ page }) => {
-      const h3 = page.locator('article h3')
+      const h3 = page.locator('article h3').first()
       const fontFamily = await h3.evaluate((el) =>
         window.getComputedStyle(el).fontFamily
       )
@@ -90,7 +92,7 @@ test.describe('HookCard', () => {
     })
 
     test('hook name font weight is light (300)', async ({ page }) => {
-      const h3 = page.locator('article h3')
+      const h3 = page.locator('article h3').first()
       const fontWeight = await h3.evaluate((el) =>
         window.getComputedStyle(el).fontWeight
       )
@@ -98,7 +100,7 @@ test.describe('HookCard', () => {
     })
 
     test('card has visible border', async ({ page }) => {
-      const article = page.locator('article')
+      const article = page.locator('article').first()
       const borderWidth = await article.evaluate((el) =>
         window.getComputedStyle(el).borderWidth
       )
@@ -106,7 +108,7 @@ test.describe('HookCard', () => {
     })
 
     test('card has rounded corners', async ({ page }) => {
-      const article = page.locator('article')
+      const article = page.locator('article').first()
       const borderRadius = await article.evaluate((el) =>
         window.getComputedStyle(el).borderRadius
       )

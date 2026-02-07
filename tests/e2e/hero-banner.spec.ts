@@ -29,7 +29,8 @@ test.describe('HeroBanner', () => {
     });
 
     test('displays animated scroll cue chevron', async ({ page }) => {
-      const svg = page.locator('section svg');
+      const heroSection = page.locator('section[aria-labelledby="hero-heading"]');
+      const svg = heroSection.locator('svg');
       await expect(svg).toBeVisible();
     });
 
@@ -200,7 +201,8 @@ test.describe('HeroBanner', () => {
 
   test.describe('scroll cue animation', () => {
     test('scroll cue SVG has CSS animation applied', async ({ page }) => {
-      const svg = page.locator('section svg');
+      const heroSection = page.locator('section[aria-labelledby="hero-heading"]');
+      const svg = heroSection.locator('svg');
       const animation = await svg.evaluate(el =>
         window.getComputedStyle(el).animationName
       );
@@ -209,7 +211,8 @@ test.describe('HeroBanner', () => {
     });
 
     test('scroll cue animation is infinite', async ({ page }) => {
-      const svg = page.locator('section svg');
+      const heroSection = page.locator('section[aria-labelledby="hero-heading"]');
+      const svg = heroSection.locator('svg');
       const iterationCount = await svg.evaluate(el =>
         window.getComputedStyle(el).animationIterationCount
       );
