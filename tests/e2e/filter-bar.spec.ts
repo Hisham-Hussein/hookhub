@@ -120,4 +120,78 @@ test.describe('FilterBar — Category Filtering (US-013)', () => {
       await expect(status).not.toContainText('hooks')
     })
   })
+
+  test.describe('keyboard navigation', () => {
+    test('ArrowRight moves to next chip and selects it', async ({ page }) => {
+      const radioGroup = page.locator('[role="radiogroup"][aria-label="Filter by purpose category"]')
+      const chips = radioGroup.locator('button[role="radio"]')
+
+      // Focus the All chip first
+      await chips.first().focus()
+      await expect(chips.first()).toHaveAttribute('aria-checked', 'true')
+
+      // ArrowRight → Safety
+      await page.keyboard.press('ArrowRight')
+      const safetyChip = chips.filter({ hasText: 'Safety' })
+      await expect(safetyChip).toHaveAttribute('aria-checked', 'true')
+      await expect(safetyChip).toBeFocused()
+    })
+
+    test('ArrowLeft wraps from first to last chip', async ({ page }) => {
+      const radioGroup = page.locator('[role="radiogroup"][aria-label="Filter by purpose category"]')
+      const chips = radioGroup.locator('button[role="radio"]')
+
+      // Focus the All chip (first)
+      await chips.first().focus()
+
+      // ArrowLeft wraps to Custom (last)
+      await page.keyboard.press('ArrowLeft')
+      const customChip = chips.filter({ hasText: 'Custom' })
+      await expect(customChip).toHaveAttribute('aria-checked', 'true')
+      await expect(customChip).toBeFocused()
+    })
+
+    test('Home key jumps to first chip (All)', async ({ page }) => {
+      const radioGroup = page.locator('[role="radiogroup"][aria-label="Filter by purpose category"]')
+      const chips = radioGroup.locator('button[role="radio"]')
+
+      // Click Testing to move focus there
+      const testingChip = chips.filter({ hasText: 'Testing' })
+      await testingChip.click()
+      await expect(testingChip).toHaveAttribute('aria-checked', 'true')
+
+      // Home → All
+      await page.keyboard.press('Home')
+      const allChip = chips.first()
+      await expect(allChip).toHaveAttribute('aria-checked', 'true')
+      await expect(allChip).toBeFocused()
+    })
+
+    test('End key jumps to last chip (Custom)', async ({ page }) => {
+      const radioGroup = page.locator('[role="radiogroup"][aria-label="Filter by purpose category"]')
+      const chips = radioGroup.locator('button[role="radio"]')
+
+      // Focus the All chip
+      await chips.first().focus()
+
+      // End → Custom
+      await page.keyboard.press('End')
+      const customChip = chips.filter({ hasText: 'Custom' })
+      await expect(customChip).toHaveAttribute('aria-checked', 'true')
+      await expect(customChip).toBeFocused()
+    })
+
+    test('keyboard selection filters the grid', async ({ page }) => {
+      const radioGroup = page.locator('[role="radiogroup"][aria-label="Filter by purpose category"]')
+      const chips = radioGroup.locator('button[role="radio"]')
+
+      // Focus All, then ArrowRight to Safety
+      await chips.first().focus()
+      await page.keyboard.press('ArrowRight')
+
+      // Grid should now show only Safety hooks (3)
+      await expect(page.locator('article')).toHaveCount(3)
+      await expect(page.locator('[role="status"]')).toContainText('Showing 3 hooks')
+    })
+  })
 })
