@@ -51,3 +51,21 @@ describe('getCategoryBadgeStyle', () => {
     expect(safety.textColor).not.toBe(automation.textColor)
   })
 })
+
+describe('getCategoryBadgeStyle integration', () => {
+  it('returns Tailwind classes that include bg- and text- prefixes', () => {
+    for (const cat of PURPOSE_CATEGORIES) {
+      const style = getCategoryBadgeStyle(cat)
+      expect(style.badgeColor).toMatch(/^bg-/)
+      expect(style.textColor).toMatch(/^text-/)
+    }
+  })
+
+  it('returns classes with dark mode variants', () => {
+    for (const cat of PURPOSE_CATEGORIES) {
+      const style = getCategoryBadgeStyle(cat)
+      expect(style.badgeColor).toContain('dark:')
+      expect(style.textColor).toContain('dark:')
+    }
+  })
+})
