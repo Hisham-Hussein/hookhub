@@ -32,10 +32,11 @@ const FilterBar = ({ hooks, onFilterChange }: FilterBarProps) => {
 
   // Compute filtered hooks once, derive count and notify parent
   const filteredHooks = useMemo(() => filterHooks(hooks, filterState), [hooks, filterState])
+  const categoryKey = filterState.category ?? 'all'
 
   useEffect(() => {
-    onFilterChange(filteredHooks, filterState.category ?? 'all')
-  }, [filteredHooks, onFilterChange])
+    onFilterChange(filteredHooks, categoryKey)
+  }, [filteredHooks, categoryKey, onFilterChange])
 
   const handleCategorySelect = useCallback((value: PurposeCategory | null, index: number) => {
     setFilterState((prev) => ({ ...prev, category: value }))
