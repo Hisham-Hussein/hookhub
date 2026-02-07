@@ -141,13 +141,13 @@ describe('HookCard', () => {
     expect(classes).toContain('focus-within:ring-2')
   })
 
-  it('renders purpose category badge with sky styling', () => {
+  it('renders purpose category badge with per-category styling', () => {
     const tree = HookCard({ hook: mockHook })
     const spans = findAll(tree, (el) => el.type === 'span')
     const categoryBadge = spans.find((s) => textContent(s) === 'Safety')
     expect(categoryBadge).toBeDefined()
     const classes = categoryBadge!.props.className as string
-    expect(classes).toMatch(/bg-sky/)
+    expect(classes).toMatch(/bg-red/)
   })
 
   it('renders lifecycle event badge with indigo styling and italic', () => {
