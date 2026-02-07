@@ -33,6 +33,12 @@ yarn-error.log*
 # env files (can opt-in for committing if needed)
 .env*
 
+# worktrees
+.worktrees/
+
+# build artifacts
+/data/enriched-hooks.json
+
 # vercel
 .vercel
 

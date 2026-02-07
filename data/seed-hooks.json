@@ -1,0 +1,119 @@
+[
+  {
+    "name": "claude-code-hooks-mastery",
+    "githubRepoUrl": "https://github.com/disler/claude-code-hooks-mastery",
+    "purposeCategory": "Safety",
+    "lifecycleEvent": "PreToolUse",
+    "description": "Master Claude Code Hooks — all 13 hook events implemented with logging, security enhancements, and intelligent TTS.",
+    "starsCount": 523,
+    "lastUpdated": "2026-01-28"
+  },
+  {
+    "name": "tdd-guard",
+    "githubRepoUrl": "https://github.com/nizos/tdd-guard",
+    "purposeCategory": "Testing",
+    "lifecycleEvent": "PreToolUse",
+    "description": "Monitors file operations in real-time and blocks changes that violate Test-Driven Development principles.",
+    "starsCount": 112,
+    "lastUpdated": "2026-01-20"
+  },
+  {
+    "name": "claudekit",
+    "githubRepoUrl": "https://github.com/carlrannaberg/claudekit",
+    "purposeCategory": "Security",
+    "lifecycleEvent": "PreToolUse",
+    "description": "A toolkit of custom commands, hooks, and utilities for Claude Code including file-guard that blocks access to sensitive files.",
+    "starsCount": 198,
+    "lastUpdated": "2026-01-25"
+  },
+  {
+    "name": "claude-code-hook-templates",
+    "githubRepoUrl": "https://github.com/iamrajiv/claude-code-hook-templates",
+    "purposeCategory": "Safety",
+    "lifecycleEvent": "UserPromptSubmit",
+    "description": "A comprehensive collection of production-ready hook templates covering all 8 Claude Code lifecycle events.",
+    "starsCount": 287,
+    "lastUpdated": "2026-01-22"
+  },
+  {
+    "name": "britfix",
+    "githubRepoUrl": "https://github.com/Talieisin/britfix",
+    "purposeCategory": "Formatting",
+    "lifecycleEvent": "PostToolUse",
+    "description": "Converts American English spellings to British English via Claude Code hooks, intelligently handling code files.",
+    "starsCount": 54,
+    "lastUpdated": "2026-01-15"
+  },
+  {
+    "name": "claude-hooks",
+    "githubRepoUrl": "https://github.com/decider/claude-hooks",
+    "purposeCategory": "Formatting",
+    "lifecycleEvent": "PostToolUse",
+    "description": "Comprehensive hooks for Claude Code to enforce clean code practices and automate workflows.",
+    "starsCount": 145,
+    "lastUpdated": "2026-01-18"
+  },
+  {
+    "name": "claude-code-typescript-hooks",
+    "githubRepoUrl": "https://github.com/bartolli/claude-code-typescript-hooks",
+    "purposeCategory": "Testing",
+    "lifecycleEvent": "PostToolUse",
+    "description": "Quality validation hook for Node.js TypeScript projects performing compilation checks, linting, and formatting.",
+    "starsCount": 78,
+    "lastUpdated": "2026-01-19"
+  },
+  {
+    "name": "claude-hook-comms",
+    "githubRepoUrl": "https://github.com/aannoo/claude-hook-comms",
+    "purposeCategory": "Automation",
+    "lifecycleEvent": "PostToolUse",
+    "description": "Enables real-time communication between Claude Code sub-agents using hooks with live dashboard monitoring.",
+    "starsCount": 124,
+    "lastUpdated": "2026-01-21"
+  },
+  {
+    "name": "claude-code-showcase",
+    "githubRepoUrl": "https://github.com/ChrisWiles/claude-code-showcase",
+    "purposeCategory": "Automation",
+    "lifecycleEvent": "Stop",
+    "description": "Comprehensive Claude Code project configuration with hooks for auto-formatting, testing, type-checking, and branch protection.",
+    "starsCount": 245,
+    "lastUpdated": "2026-01-26"
+  },
+  {
+    "name": "cc-notify",
+    "githubRepoUrl": "https://github.com/dazuiba/CCNotify",
+    "purposeCategory": "Notification",
+    "lifecycleEvent": "Notification",
+    "description": "Desktop notifications for Claude Code — alerts you to input needs or task completion with one-click jump to VS Code.",
+    "starsCount": 89,
+    "lastUpdated": "2026-01-14"
+  },
+  {
+    "name": "claudio",
+    "githubRepoUrl": "https://github.com/ctoth/claudio",
+    "purposeCategory": "Notification",
+    "lifecycleEvent": "Stop",
+    "description": "Adds OS-native sounds to Claude Code operations through simple hook integrations.",
+    "starsCount": 63,
+    "lastUpdated": "2026-01-17"
+  },
+  {
+    "name": "multi-agent-observability",
+    "githubRepoUrl": "https://github.com/disler/claude-code-hooks-multi-agent-observability",
+    "purposeCategory": "Logging",
+    "lifecycleEvent": "PostToolUse",
+    "description": "Real-time monitoring for Claude Code agents through simple hook event tracking.",
+    "starsCount": 201,
+    "lastUpdated": "2026-01-23"
+  },
+  {
+    "name": "claude-hooks-ts",
+    "githubRepoUrl": "https://github.com/johnlindquist/claude-hooks",
+    "purposeCategory": "Custom",
+    "lifecycleEvent": "PostToolUse",
+    "description": "TypeScript-powered hook system for Claude Code with full type safety, auto-completion, and strongly-typed payloads.",
+    "starsCount": 412,
+    "lastUpdated": "2026-01-29"
+  }
+]

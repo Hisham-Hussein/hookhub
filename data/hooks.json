@@ -1,0 +1,80 @@
+[
+  {
+    "name": "claude-code-hooks-mastery",
+    "githubRepoUrl": "https://github.com/disler/claude-code-hooks-mastery",
+    "purposeCategory": "Safety",
+    "lifecycleEvent": "PreToolUse"
+  },
+  {
+    "name": "tdd-guard",
+    "githubRepoUrl": "https://github.com/nizos/tdd-guard",
+    "purposeCategory": "Testing",
+    "lifecycleEvent": "PreToolUse"
+  },
+  {
+    "name": "claudekit",
+    "githubRepoUrl": "https://github.com/carlrannaberg/claudekit",
+    "purposeCategory": "Security",
+    "lifecycleEvent": "PreToolUse"
+  },
+  {
+    "name": "claude-code-hook-templates",
+    "githubRepoUrl": "https://github.com/iamrajiv/claude-code-hook-templates",
+    "purposeCategory": "Safety",
+    "lifecycleEvent": "UserPromptSubmit"
+  },
+  {
+    "name": "britfix",
+    "githubRepoUrl": "https://github.com/Talieisin/britfix",
+    "purposeCategory": "Formatting",
+    "lifecycleEvent": "PostToolUse"
+  },
+  {
+    "name": "claude-hooks",
+    "githubRepoUrl": "https://github.com/decider/claude-hooks",
+    "purposeCategory": "Formatting",
+    "lifecycleEvent": "PostToolUse"
+  },
+  {
+    "name": "claude-code-typescript-hooks",
+    "githubRepoUrl": "https://github.com/bartolli/claude-code-typescript-hooks",
+    "purposeCategory": "Testing",
+    "lifecycleEvent": "PostToolUse"
+  },
+  {
+    "name": "claude-hook-comms",
+    "githubRepoUrl": "https://github.com/aannoo/claude-hook-comms",
+    "purposeCategory": "Automation",
+    "lifecycleEvent": "PostToolUse"
+  },
+  {
+    "name": "claude-code-showcase",
+    "githubRepoUrl": "https://github.com/ChrisWiles/claude-code-showcase",
+    "purposeCategory": "Automation",
+    "lifecycleEvent": "Stop"
+  },
+  {
+    "name": "cc-notify",
+    "githubRepoUrl": "https://github.com/dazuiba/CCNotify",
+    "purposeCategory": "Notification",
+    "lifecycleEvent": "Notification"
+  },
+  {
+    "name": "claudio",
+    "githubRepoUrl": "https://github.com/ctoth/claudio",
+    "purposeCategory": "Notification",
+    "lifecycleEvent": "Stop"
+  },
+  {
+    "name": "multi-agent-observability",
+    "githubRepoUrl": "https://github.com/disler/claude-code-hooks-multi-agent-observability",
+    "purposeCategory": "Logging",
+    "lifecycleEvent": "PostToolUse"
+  },
+  {
+    "name": "claude-hooks-ts",
+    "githubRepoUrl": "https://github.com/johnlindquist/claude-hooks",
+    "purposeCategory": "Custom",
+    "lifecycleEvent": "PostToolUse"
+  }
+]
