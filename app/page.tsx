@@ -1,6 +1,6 @@
 // app/page.tsx
 import { HeroBanner } from '@/app/components/HeroBanner'
-import { HookGrid } from '@/app/components/HookGrid'
+import { CatalogWithFilters } from '@/app/components/CatalogWithFilters'
 import type { Hook } from '@/lib/domain/types'
 
 // Temporary sample data for visual verification (US-004).
@@ -131,7 +131,7 @@ const Home = () => {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <HeroBanner />
         <main id="main-content">
-          <HookGrid hooks={sampleHooks} />
+          <CatalogWithFilters hooks={sampleHooks} />
         </main>
       </div>
     </div>
