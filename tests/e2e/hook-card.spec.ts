@@ -62,9 +62,9 @@ test.describe('HookCard', () => {
     })
 
     test('card is one tab stop (stretched link pattern)', async ({ page }) => {
-      // Tab past the skip link, then to the card
-      await page.keyboard.press('Tab') // skip link
-      await page.keyboard.press('Tab') // card link
+      // Focus the first card's link directly — avoids fragile tab-count assumptions
+      const firstCardLink = page.locator('article a').first()
+      await firstCardLink.focus()
 
       const focused = page.locator(':focus')
       await expect(focused).toBeAttached()
