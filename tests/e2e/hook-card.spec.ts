@@ -47,6 +47,35 @@ test.describe('HookCard', () => {
     test('displays GitHub external link indicator', async ({ page }) => {
       await expect(page.locator('article').first()).toContainText('GitHub')
     })
+
+    test('each card links to its own correct GitHub repo URL', async ({ page }) => {
+      const links = page.locator('article h3 a')
+      const count = await links.count()
+      expect(count).toBeGreaterThanOrEqual(3)
+
+      // Collect all hrefs and verify they are distinct
+      const hrefs: string[] = []
+      for (let i = 0; i < count; i++) {
+        const href = await links.nth(i).getAttribute('href')
+        expect(href).toBeTruthy()
+        expect(href).toMatch(/^https:\/\/github\.com\//)
+        hrefs.push(href!)
+      }
+      const uniqueHrefs = new Set(hrefs)
+      expect(uniqueHrefs.size).toBe(count)
+
+      // Spot-check known card-to-URL mappings from sample data
+      const nameToUrl: Record<string, string> = {
+        'safe-rm': 'https://github.com/devtools-org/safe-rm-hook',
+        'secret-scanner': 'https://github.com/sec-hooks/secret-scanner',
+        'branch-guard': 'https://github.com/safety-hooks/branch-guard',
+      }
+      for (const [name, expectedUrl] of Object.entries(nameToUrl)) {
+        const card = page.locator('article', { has: page.locator(`h3:has-text("${name}")`) })
+        const link = card.locator('h3 a')
+        await expect(link).toHaveAttribute('href', expectedUrl)
+      }
+    })
   })
 
   test.describe('accessibility', () => {
