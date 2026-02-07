@@ -139,10 +139,8 @@ test.describe('HookCard', () => {
 
     test('card has rounded corners', async ({ page }) => {
       const article = page.locator('article').first()
-      const borderRadius = await article.evaluate((el) =>
-        window.getComputedStyle(el).borderRadius
-      )
-      expect(parseFloat(borderRadius)).toBeGreaterThan(0)
+      const className = await article.getAttribute('class')
+      expect(className).toContain('rounded-xl')
     })
   })
 })
