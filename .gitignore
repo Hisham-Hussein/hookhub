@@ -36,8 +36,7 @@ yarn-error.log*
 # worktrees
 .worktrees/
 
-# build artifacts
-/data/enriched-hooks.json
+# build artifacts (enriched-hooks.json is tracked while manifest repos are fictional)
 
 # vercel
 .vercel
