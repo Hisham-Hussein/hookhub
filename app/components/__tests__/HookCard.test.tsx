@@ -150,14 +150,30 @@ describe('HookCard', () => {
     expect(classes).toMatch(/bg-red/)
   })
 
-  it('renders lifecycle event badge with indigo styling and italic', () => {
+  it('renders lifecycle event badge with per-event styling from getEventBadgeStyle', () => {
     const tree = HookCard({ hook: mockHook })
     const spans = findAll(tree, (el) => el.type === 'span')
     const eventBadge = spans.find((s) => textContent(s) === 'PreToolUse')
     expect(eventBadge).toBeDefined()
     const classes = eventBadge!.props.className as string
+    // Per-event color from domain (PreToolUse = indigo)
     expect(classes).toMatch(/bg-indigo/)
     expect(classes).toContain('italic')
+  })
+
+  it('event badge uses different colors for different events', () => {
+    const postToolHook: Hook = { ...mockHook, lifecycleEvent: 'PostToolUse' }
+    const preTree = HookCard({ hook: mockHook })
+    const postTree = HookCard({ hook: postToolHook })
+
+    const getEventBadgeClasses = (tree: React.ReactElement, label: string) => {
+      const spans = findAll(tree, (el) => el.type === 'span')
+      return spans.find((s) => textContent(s) === label)?.props.className as string
+    }
+
+    const preClasses = getEventBadgeClasses(preTree, 'PreToolUse')
+    const postClasses = getEventBadgeClasses(postTree, 'PostToolUse')
+    expect(preClasses).not.toBe(postClasses)
   })
 
   it('renders description with line-clamp-2', () => {

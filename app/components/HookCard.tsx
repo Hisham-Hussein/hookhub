@@ -1,5 +1,6 @@
 import type { Hook } from '@/lib/domain/types'
 import { getCategoryBadgeStyle } from '@/lib/domain/categories'
+import { getEventBadgeStyle } from '@/lib/domain/events'
 
 interface HookCardProps {
   hook: Hook
@@ -26,6 +27,7 @@ const starsAriaLabel = (count: number): string => {
 
 const HookCard = ({ hook }: HookCardProps) => {
   const categoryStyle = getCategoryBadgeStyle(hook.purposeCategory)
+  const eventStyle = getEventBadgeStyle(hook.lifecycleEvent)
 
   return (
     <article className="group relative rounded-xl border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-950 p-5 space-y-3 transition-all duration-200 hover:border-zinc-400 dark:hover:border-zinc-600 hover:shadow-lg hover:shadow-sky-500/[0.03] focus-within:ring-2 focus-within:ring-sky-400/50 focus-within:ring-offset-2 focus-within:ring-offset-white dark:focus-within:ring-offset-black">
@@ -41,12 +43,12 @@ const HookCard = ({ hook }: HookCardProps) => {
         </a>
       </h3>
 
-      {/* Badges: category (per-category color) + lifecycle event (indigo) */}
+      {/* Badges: category (per-category color) + lifecycle event (per-event color) */}
       <div className="flex gap-2 flex-wrap">
         <span className={`relative z-10 inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-light border ${categoryStyle.badgeColor} ${categoryStyle.textColor} tracking-wide`}>
           {hook.purposeCategory}
         </span>
-        <span className="relative z-10 inline-flex items-center px-2.5 py-0.5 rounded text-xs font-light bg-indigo-50 text-indigo-700 border border-indigo-200 dark:bg-indigo-500/15 dark:text-indigo-400 dark:border-indigo-500/20 tracking-wide italic">
+        <span className={`relative z-10 inline-flex items-center px-2.5 py-0.5 rounded text-xs font-light border ${eventStyle.badgeColor} ${eventStyle.textColor} tracking-wide italic`}>
           {hook.lifecycleEvent}
         </span>
       </div>
