@@ -172,4 +172,42 @@ test.describe('HookCard', () => {
       expect(className).toContain('rounded-xl')
     })
   })
+
+  test.describe('event badge visual distinction', () => {
+    test('event badges for different events have different background colors', async ({ page }) => {
+      const cards = page.locator('article')
+      const count = await cards.count()
+      expect(count).toBeGreaterThanOrEqual(2)
+
+      // Collect background colors of event badges (second span in the badge row)
+      const bgColors = new Set<string>()
+      for (let i = 0; i < Math.min(count, 8); i++) {
+        const badge = cards.nth(i).locator('.flex.gap-2 > span').nth(1)
+        if (await badge.count() > 0) {
+          const bg = await badge.evaluate((el) => window.getComputedStyle(el).backgroundColor)
+          bgColors.add(bg)
+        }
+      }
+
+      // With diverse seed data, at least 2 distinct event colors
+      expect(bgColors.size).toBeGreaterThanOrEqual(2)
+    })
+
+    test('event badge uses italic styling', async ({ page }) => {
+      const eventBadge = page.locator('article .flex.gap-2 > span').nth(1)
+      const fontStyle = await eventBadge.evaluate((el) => window.getComputedStyle(el).fontStyle)
+      expect(fontStyle).toBe('italic')
+    })
+
+    test('event badge styling differs from category badge styling', async ({ page }) => {
+      const firstCard = page.locator('article').first()
+      const categoryBadge = firstCard.locator('.flex.gap-2 > span').first()
+      const eventBadge = firstCard.locator('.flex.gap-2 > span').nth(1)
+
+      const catBg = await categoryBadge.evaluate((el) => window.getComputedStyle(el).backgroundColor)
+      const evtBg = await eventBadge.evaluate((el) => window.getComputedStyle(el).backgroundColor)
+
+      expect(catBg).not.toBe(evtBg)
+    })
+  })
 })
