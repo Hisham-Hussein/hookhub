@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { HookCard } from '../HookCard'
+import { StarIcon } from '@/app/components/StarIcon'
 import type { Hook } from '@/lib/domain/types'
 
 /**
@@ -163,12 +164,11 @@ describe('HookCard Edge Cases', () => {
   // ─── 5. Description Edge Cases ────────────────────────────────────
 
   describe('Description Edge Cases', () => {
-    it('empty description renders empty paragraph', () => {
+    it('empty description omits paragraph to avoid blank gap', () => {
       const hook = { ...baseHook, description: '' }
       const tree = HookCard({ hook })
       const paragraphs = findAll(tree, (el) => el.type === 'p')
-      expect(paragraphs).toHaveLength(1)
-      expect(textContent(paragraphs[0])).toBe('')
+      expect(paragraphs).toHaveLength(0)
     })
 
     it('very long description still has line-clamp-2 class', () => {
@@ -209,12 +209,10 @@ describe('HookCard Edge Cases', () => {
       expect(spans).toHaveLength(2)
     })
 
-    it('star icon SVG has aria-hidden="true"', () => {
+    it('star icon uses StarIcon component (aria-hidden verified in StarIcon tests)', () => {
       const tree = HookCard({ hook: baseHook })
-      const svgs = findAll(tree, (el) => el.type === 'svg')
-      const starSvg = svgs.find((s) => s.props.fill === 'currentColor')
-      expect(starSvg).toBeDefined()
-      expect(starSvg!.props['aria-hidden']).toBe('true')
+      const starIcons = findAll(tree, (el) => el.type === StarIcon)
+      expect(starIcons).toHaveLength(1)
     })
 
     it('external link arrow SVG has aria-hidden="true"', () => {

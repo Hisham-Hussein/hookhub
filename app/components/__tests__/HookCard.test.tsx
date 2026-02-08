@@ -141,23 +141,39 @@ describe('HookCard', () => {
     expect(classes).toContain('focus-within:ring-2')
   })
 
-  it('renders purpose category badge with sky styling', () => {
+  it('renders purpose category badge with per-category styling', () => {
     const tree = HookCard({ hook: mockHook })
     const spans = findAll(tree, (el) => el.type === 'span')
     const categoryBadge = spans.find((s) => textContent(s) === 'Safety')
     expect(categoryBadge).toBeDefined()
     const classes = categoryBadge!.props.className as string
-    expect(classes).toMatch(/bg-sky/)
+    expect(classes).toMatch(/bg-red/)
   })
 
-  it('renders lifecycle event badge with indigo styling and italic', () => {
+  it('renders lifecycle event badge with per-event styling from getEventBadgeStyle', () => {
     const tree = HookCard({ hook: mockHook })
     const spans = findAll(tree, (el) => el.type === 'span')
     const eventBadge = spans.find((s) => textContent(s) === 'PreToolUse')
     expect(eventBadge).toBeDefined()
     const classes = eventBadge!.props.className as string
+    // Per-event color from domain (PreToolUse = indigo)
     expect(classes).toMatch(/bg-indigo/)
     expect(classes).toContain('italic')
+  })
+
+  it('event badge uses different colors for different events', () => {
+    const postToolHook: Hook = { ...mockHook, lifecycleEvent: 'PostToolUse' }
+    const preTree = HookCard({ hook: mockHook })
+    const postTree = HookCard({ hook: postToolHook })
+
+    const getEventBadgeClasses = (tree: React.ReactElement, label: string) => {
+      const spans = findAll(tree, (el) => el.type === 'span')
+      return spans.find((s) => textContent(s) === label)?.props.className as string
+    }
+
+    const preClasses = getEventBadgeClasses(preTree, 'PreToolUse')
+    const postClasses = getEventBadgeClasses(postTree, 'PostToolUse')
+    expect(preClasses).not.toBe(postClasses)
   })
 
   it('renders description with line-clamp-2', () => {
@@ -204,6 +220,24 @@ describe('HookCard', () => {
     const starSpan = spans.find((s) => s.props['aria-label']?.includes('GitHub stars'))
     expect(starSpan).toBeDefined()
     expect(starSpan!.props['aria-label']).toBe('0 GitHub stars')
+  })
+
+  it('imports formatStarsCount from domain layer (not inline)', async () => {
+    const fs = await import('fs')
+    const path = await import('path')
+    const filePath = path.resolve(__dirname, '../HookCard.tsx')
+    const source = fs.readFileSync(filePath, 'utf-8')
+    expect(source).toContain("from '@/lib/domain/format'")
+    // Should NOT contain inline formatStars function
+    expect(source).not.toMatch(/const formatStars\s*=/)
+  })
+
+  it('imports StarIcon component (not inline SVG for star)', async () => {
+    const fs = await import('fs')
+    const path = await import('path')
+    const filePath = path.resolve(__dirname, '../HookCard.tsx')
+    const source = fs.readFileSync(filePath, 'utf-8')
+    expect(source).toContain("from '@/app/components/StarIcon'")
   })
 
   it('category and event badges have relative z-10 (clickable above stretched link)', () => {
