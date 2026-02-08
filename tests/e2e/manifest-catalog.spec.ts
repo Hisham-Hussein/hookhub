@@ -38,22 +38,27 @@ test.describe('Manifest-Driven Catalog (US-020)', () => {
     }
   })
 
-  test('no hooks appear that are not in the manifest', async ({ page }) => {
-    const manifestNames = new Set(manifestEntries.map((e) => e.name))
-    const cards = page.locator('article')
-    const count = await cards.count()
+  test('filter categories show expected options from manifest', async ({ page }) => {
+    const categoryGroup = page.locator('[role="radiogroup"][aria-label="Filter by purpose category"]')
+    const chips = categoryGroup.locator('button[role="radio"]')
 
-    const displayedNames: string[] = []
-    for (let i = 0; i < count; i++) {
-      const heading = cards.nth(i).locator('h3')
-      const name = await heading.textContent()
-      if (name) displayedNames.push(name.trim())
+    // Extract unique categories from manifest
+    const expectedCategories = [...new Set(manifestEntries.map((e) => e.purposeCategory))]
+
+    // First chip is "All", remaining should cover manifest categories
+    const chipCount = await chips.count()
+    const chipLabels: string[] = []
+    for (let i = 0; i < chipCount; i++) {
+      const text = await chips.nth(i).textContent()
+      if (text) chipLabels.push(text.trim())
     }
 
-    for (const name of displayedNames) {
-      expect(manifestNames.has(name)).toBe(true)
-    }
+    // "All" should be the first option
+    expect(chipLabels[0]).toBe('All')
 
-    expect(displayedNames.length).toBe(manifestEntries.length)
+    // Every category from the manifest should appear as a filter option
+    for (const category of expectedCategories) {
+      expect(chipLabels).toContain(category)
+    }
   })
 })

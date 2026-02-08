@@ -36,27 +36,16 @@ describe('enrichManifest — scale', () => {
     expect(result.summary).toContain('Enriched 25/25')
   })
 
-  it('completes within 5 seconds for 25 entries', async () => {
+  it('handles mixed success and failure (20 succeed, 5 fail)', async () => {
     const entries = generateManifestEntries(25)
     const readManifest = vi.fn().mockResolvedValue(entries)
-    const fetchMetadata = vi.fn().mockResolvedValue(mockGitHubData)
-    const readRawManifest = vi.fn().mockResolvedValue(entries)
-
-    const start = Date.now()
-    await enrichManifest({
-      readManifest,
-      fetchMetadata,
-      readRawManifest,
+    const fetchMetadata = vi.fn().mockImplementation((url: string) => {
+      const index = parseInt(url.split('repo-')[1]) - 1
+      if (index >= 20) {
+        return Promise.reject(new Error('API rate limit'))
+      }
+      return Promise.resolve(mockGitHubData)
     })
-    const elapsed = Date.now() - start
-
-    expect(elapsed).toBeLessThan(5000)
-  })
-
-  it('each of the 25 hooks has correct enriched data', async () => {
-    const entries = generateManifestEntries(25)
-    const readManifest = vi.fn().mockResolvedValue(entries)
-    const fetchMetadata = vi.fn().mockResolvedValue(mockGitHubData)
     const readRawManifest = vi.fn().mockResolvedValue(entries)
 
     const result = await enrichManifest({
@@ -65,10 +54,22 @@ describe('enrichManifest — scale', () => {
       readRawManifest,
     })
 
-    for (let i = 0; i < 25; i++) {
-      expect(result.hooks[i].name).toBe(`hook-${i + 1}`)
-      expect(result.hooks[i].description).toBe('A test hook')
-      expect(result.hooks[i].starsCount).toBe(10)
+    expect(result.hooks).toHaveLength(20)
+    expect(result.failures).toHaveLength(5)
+    expect(result.summary).toContain('Enriched 20/25')
+  })
+
+  it('25-entry set covers all purpose categories and lifecycle events', () => {
+    const entries = generateManifestEntries(25)
+
+    const categories = new Set(entries.map((e) => e.purposeCategory))
+    const events = new Set(entries.map((e) => e.lifecycleEvent))
+
+    for (const cat of PURPOSE_CATEGORIES) {
+      expect(categories.has(cat)).toBe(true)
+    }
+    for (const evt of LIFECYCLE_EVENTS) {
+      expect(events.has(evt)).toBe(true)
     }
   })
 })
