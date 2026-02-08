@@ -44,10 +44,12 @@ const HookCard = ({ hook }: HookCardProps) => {
         </span>
       </div>
 
-      {/* Description — 2-line clamp */}
-      <p className="text-sm text-zinc-700 dark:text-zinc-400 font-light line-clamp-2 leading-relaxed">
-        {hook.description}
-      </p>
+      {/* Description — 2-line clamp; omit if empty to avoid blank gap */}
+      {hook.description && (
+        <p className="text-sm text-zinc-700 dark:text-zinc-400 font-light line-clamp-2 leading-relaxed">
+          {hook.description}
+        </p>
+      )}
 
       {/* Footer: stars + external link indicator */}
       <div className="flex items-center justify-between text-xs text-zinc-600 dark:text-zinc-500 pt-1">
