@@ -210,4 +210,24 @@ test.describe('HookCard', () => {
       expect(catBg).not.toBe(evtBg)
     })
   })
+
+  test.describe('stars count display', () => {
+    test('star icon is present alongside the count', async ({ page }) => {
+      const firstCard = page.locator('article').first()
+      const starSvg = firstCard.locator('svg[aria-hidden="true"]').first()
+      await expect(starSvg).toBeVisible()
+    })
+
+    test('formatted count appears next to star icon', async ({ page }) => {
+      // Verify the stars span contains both an SVG and text
+      const starSpan = page.locator('article span[aria-label*="GitHub stars"]').first()
+      await expect(starSpan).toBeVisible()
+      const svg = starSpan.locator('svg')
+      await expect(svg).toBeAttached()
+      const text = await starSpan.textContent()
+      expect(text).toBeTruthy()
+      // Text should contain a number (e.g., "523", "1.2k")
+      expect(text!.trim()).toMatch(/^\d/)
+    })
+  })
 })
