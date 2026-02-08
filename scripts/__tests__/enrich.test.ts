@@ -39,7 +39,7 @@ describe('runEnrichment', () => {
   })
 
   it('writes enriched hooks JSON to output path', async () => {
-    const result = await runEnrichment()
+    await runEnrichment()
 
     expect(mockedFs.writeFile).toHaveBeenCalledWith(
       expect.stringContaining('enriched-hooks.json'),

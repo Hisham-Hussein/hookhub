@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from 'vitest'
 import { enrichManifest } from '../enrich-manifest'
 import type { ManifestEntry } from '@/lib/domain/types'
-import type { EnrichManifestDeps, GitHubMetadata } from '../enrich-manifest'
+import type { GitHubMetadata } from '../enrich-manifest'
 
 describe('EnrichManifestDeps contract', () => {
   const validEntry: ManifestEntry = {
