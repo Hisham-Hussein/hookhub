@@ -24,6 +24,14 @@ describe('runEnrichment wiring contract', () => {
         lifecycleEvent: 'PreToolUse',
       },
     ])
+    mockedReader.readRawManifest.mockResolvedValue([
+      {
+        name: 'test-hook',
+        githubRepoUrl: 'https://github.com/owner/repo',
+        purposeCategory: 'Safety',
+        lifecycleEvent: 'PreToolUse',
+      },
+    ])
     mockedGithub.fetchRepoMetadata.mockResolvedValue({
       description: 'Mock desc',
       starsCount: 50,

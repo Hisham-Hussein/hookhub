@@ -1,6 +1,6 @@
 import { writeFile, mkdir } from 'fs/promises'
 import { join, dirname } from 'path'
-import { readManifest } from '@/lib/adapters/manifest-reader'
+import { readManifest, readRawManifest } from '@/lib/adapters/manifest-reader'
 import { fetchRepoMetadata } from '@/lib/adapters/github-api'
 import { enrichManifest } from '@/lib/application/enrich-manifest'
 
@@ -16,6 +16,7 @@ export async function runEnrichment(): Promise<{
   const result = await enrichManifest({
     readManifest: () => readManifest(MANIFEST_PATH),
     fetchMetadata: (url) => fetchRepoMetadata(url, token),
+    readRawManifest: () => readRawManifest(MANIFEST_PATH),
   })
 
   await mkdir(dirname(OUTPUT_PATH), { recursive: true })

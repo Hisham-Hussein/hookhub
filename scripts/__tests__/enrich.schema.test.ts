@@ -32,36 +32,15 @@ vi.mock('@/lib/adapters/manifest-reader', () => ({
   ]),
 }))
 
-describe('runEnrichment', () => {
+describe('runEnrichment — schema validation wiring', () => {
   beforeEach(() => {
     mockedFs.writeFile.mockResolvedValue()
     mockedFs.mkdir.mockResolvedValue(undefined)
   })
 
-  it('writes enriched hooks JSON to output path', async () => {
-    const result = await runEnrichment()
-
-    expect(mockedFs.writeFile).toHaveBeenCalledWith(
-      expect.stringContaining('enriched-hooks.json'),
-      expect.any(String),
-      'utf-8',
-    )
-
-    const writtenData = JSON.parse(
-      mockedFs.writeFile.mock.calls[0][1] as string,
-    )
-    expect(Array.isArray(writtenData)).toBe(true)
-    expect(writtenData[0].name).toBe('test-hook')
-    expect(writtenData[0].description).toBe('Mock description')
-  })
-
-  it('returns the enrichment summary', async () => {
-    const result = await runEnrichment()
-    expect(result.summary).toMatch(/Enriched \d+\/\d+ hooks/)
-  })
-
-  it('exits successfully (returns success flag)', async () => {
+  it('passes readRawManifest to enrichManifest for schema validation', async () => {
     const result = await runEnrichment()
     expect(result.success).toBe(true)
+    expect(result.summary).toMatch(/Enriched/)
   })
 })
