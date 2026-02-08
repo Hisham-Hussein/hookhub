@@ -164,12 +164,11 @@ describe('HookCard Edge Cases', () => {
   // ─── 5. Description Edge Cases ────────────────────────────────────
 
   describe('Description Edge Cases', () => {
-    it('empty description renders empty paragraph', () => {
+    it('empty description omits paragraph to avoid blank gap', () => {
       const hook = { ...baseHook, description: '' }
       const tree = HookCard({ hook })
       const paragraphs = findAll(tree, (el) => el.type === 'p')
-      expect(paragraphs).toHaveLength(1)
-      expect(textContent(paragraphs[0])).toBe('')
+      expect(paragraphs).toHaveLength(0)
     })
 
     it('very long description still has line-clamp-2 class', () => {
