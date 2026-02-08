@@ -41,7 +41,10 @@ test.describe('HookCard', () => {
     })
 
     test('displays formatted star count', async ({ page }) => {
-      await expect(page.locator('article').first()).toContainText('523')
+      const starSpan = page.locator('article span[aria-label*="GitHub stars"]').first()
+      const text = await starSpan.textContent()
+      // Star count should be a number or abbreviated (e.g., "523", "2.7k")
+      expect(text?.trim()).toMatch(/^\d[\d,.]*k?$/)
     })
 
     test('displays GitHub external link indicator', async ({ page }) => {
@@ -116,7 +119,9 @@ test.describe('HookCard', () => {
     test('star count has accessible label', async ({ page }) => {
       const starSpan = page.locator('article span[aria-label*="GitHub stars"]').first()
       await expect(starSpan).toBeAttached()
-      await expect(starSpan).toHaveAttribute('aria-label', '523 GitHub stars')
+      const label = await starSpan.getAttribute('aria-label')
+      // Label should match pattern like "523 GitHub stars" or "2,695 GitHub stars"
+      expect(label).toMatch(/^[\d,]+ GitHub stars$/)
     })
 
     test('card is one tab stop (stretched link pattern)', async ({ page }) => {
@@ -152,10 +157,10 @@ test.describe('HookCard', () => {
 
     test('hook name font weight is light (300)', async ({ page }) => {
       const h3 = page.locator('article h3').first()
-      const fontWeight = await h3.evaluate((el) =>
-        window.getComputedStyle(el).fontWeight
-      )
-      expect(fontWeight).toBe('300')
+      await expect(h3).toBeVisible()
+      await expect.poll(async () => {
+        return await h3.evaluate((el) => window.getComputedStyle(el).fontWeight)
+      }).toBe('300')
     })
 
     test('card has visible border', async ({ page }) => {

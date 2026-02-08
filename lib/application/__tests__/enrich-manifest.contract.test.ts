@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from 'vitest'
 import { enrichManifest } from '../enrich-manifest'
 import type { ManifestEntry } from '@/lib/domain/types'
-import type { EnrichManifestDeps, GitHubMetadata } from '../enrich-manifest'
+import type { GitHubMetadata } from '../enrich-manifest'
 
 describe('EnrichManifestDeps contract', () => {
   const validEntry: ManifestEntry = {
@@ -94,7 +94,7 @@ describe('EnrichManifestDeps contract', () => {
         readManifest: async () => scenario.entries,
         fetchMetadata: async () => validMetadata,
       })
-      expect(result.summary).toMatch(/^Enriched \d+\/\d+ hooks; \d+ failed$/)
+      expect(result.summary).toMatch(/^Enriched \d+\/\d+ hooks; \d+ failed\. Validated \d+ repo links; \d+ unreachable$/)
     }
   })
 })

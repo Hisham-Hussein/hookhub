@@ -18,7 +18,7 @@ describe('enrichManifest edge cases', () => {
 
     expect(result.hooks).toHaveLength(0)
     expect(result.failures).toHaveLength(0)
-    expect(result.summary).toBe('Enriched 0/0 hooks; 0 failed')
+    expect(result.summary).toBe('Enriched 0/0 hooks; 0 failed. Validated 0 repo links; 0 unreachable')
     expect(fetchMetadata).not.toHaveBeenCalled()
   })
 
@@ -87,7 +87,7 @@ describe('enrichManifest edge cases', () => {
 
     expect(result.hooks).toHaveLength(1)
     expect(result.failures).toHaveLength(2) // 1 validation + 1 fetch
-    expect(result.summary).toBe('Enriched 1/3 hooks; 2 failed')
+    expect(result.summary).toBe('Enriched 1/3 hooks; 2 failed. Validated 2 repo links; 1 unreachable')
   })
 
   it('preserves all entry fields in the enriched hook', async () => {
@@ -142,6 +142,6 @@ describe('enrichManifest edge cases', () => {
     const result = await enrichManifest({ readManifest, fetchMetadata })
 
     expect(result.hooks).toHaveLength(100)
-    expect(result.summary).toBe('Enriched 100/100 hooks; 0 failed')
+    expect(result.summary).toBe('Enriched 100/100 hooks; 0 failed. Validated 100 repo links; 0 unreachable')
   })
 })

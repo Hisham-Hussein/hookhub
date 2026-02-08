@@ -103,7 +103,7 @@ describe('enrichManifest integration with real validation', () => {
 
     expect(result.hooks).toHaveLength(2) // first and third
     expect(result.failures).toHaveLength(1) // second (invalid category)
-    expect(result.summary).toBe('Enriched 2/3 hooks; 1 failed')
+    expect(result.summary).toBe('Enriched 2/3 hooks; 1 failed. Validated 2 repo links; 0 unreachable')
   })
 
   it('passes correct githubRepoUrl to fetchMetadata for each valid entry', async () => {

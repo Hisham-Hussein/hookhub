@@ -1,6 +1,6 @@
 import { writeFile, mkdir } from 'fs/promises'
 import { join, dirname } from 'path'
-import { readManifest } from '@/lib/adapters/manifest-reader'
+import { readManifest, readRawManifest } from '@/lib/adapters/manifest-reader'
 import { fetchRepoMetadata } from '@/lib/adapters/github-api'
 import { enrichManifest } from '@/lib/application/enrich-manifest'
 
@@ -16,6 +16,7 @@ export async function runEnrichment(): Promise<{
   const result = await enrichManifest({
     readManifest: () => readManifest(MANIFEST_PATH),
     fetchMetadata: (url) => fetchRepoMetadata(url, token),
+    readRawManifest: () => readRawManifest(MANIFEST_PATH),
   })
 
   await mkdir(dirname(OUTPUT_PATH), { recursive: true })
@@ -27,6 +28,14 @@ export async function runEnrichment(): Promise<{
     console.warn('Failures:')
     for (const f of result.failures) {
       console.warn(`  - ${f.entry.name}: ${f.error}`)
+    }
+  }
+
+  const unreachable = result.validationResults.filter((v) => !v.reachable)
+  if (unreachable.length > 0) {
+    console.warn('Link validation warnings:')
+    for (const v of unreachable) {
+      console.warn(`  ⚠ ${v.url} — ${v.error}`)
     }
   }
 

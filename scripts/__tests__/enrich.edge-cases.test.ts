@@ -21,6 +21,14 @@ vi.mock('@/lib/adapters/manifest-reader', () => ({
       lifecycleEvent: 'PreToolUse',
     },
   ]),
+  readRawManifest: vi.fn().mockResolvedValue([
+    {
+      name: 'test-hook',
+      githubRepoUrl: 'https://github.com/owner/repo',
+      purposeCategory: 'Safety',
+      lifecycleEvent: 'PreToolUse',
+    },
+  ]),
 }))
 
 describe('runEnrichment edge cases', () => {

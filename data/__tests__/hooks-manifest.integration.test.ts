@@ -38,7 +38,7 @@ describe('seed manifest integration with pipeline', () => {
     // All 13 entries should be enriched (none should fail validation)
     expect(result.hooks).toHaveLength(entries.length)
     expect(result.failures).toHaveLength(0)
-    expect(result.summary).toBe(`Enriched ${entries.length}/${entries.length} hooks; 0 failed`)
+    expect(result.summary).toBe(`Enriched ${entries.length}/${entries.length} hooks; 0 failed. Validated ${entries.length} repo links; 0 unreachable`)
   })
 
   it('enriched hooks from seed data have correct structure', async () => {
