@@ -89,7 +89,7 @@ describe('full pipeline integration', () => {
     expect(result.failures).toHaveLength(2) // entry 1 (validation) + entry 2 (fetch)
     expect(result.failures[0].error).toContain('validation') // first failure is validation
     expect(result.failures[1].error).toContain('404') // second failure is fetch
-    expect(result.summary).toBe('Enriched 2/4 hooks; 2 failed')
+    expect(result.summary).toBe('Enriched 2/4 hooks; 2 failed. Validated 3 repo links; 1 unreachable')
 
     // fetchMetadata called only for valid entries (3 times, not 4)
     expect(fetchMetadata).toHaveBeenCalledTimes(3)

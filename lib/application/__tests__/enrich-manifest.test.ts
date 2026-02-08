@@ -30,7 +30,7 @@ describe('enrichManifest', () => {
     expect(result.hooks[0].description).toBe('A great hook')
     expect(result.hooks[0].starsCount).toBe(42)
     expect(result.failures).toHaveLength(0)
-    expect(result.summary).toBe('Enriched 1/1 hooks; 0 failed')
+    expect(result.summary).toBe('Enriched 1/1 hooks; 0 failed. Validated 1 repo links; 0 unreachable')
   })
 
   it('handles partial GitHub failures', async () => {
@@ -49,7 +49,7 @@ describe('enrichManifest', () => {
     expect(result.failures).toHaveLength(1)
     expect(result.failures[0].entry.name).toBe('broken-hook')
     expect(result.failures[0].error).toContain('404')
-    expect(result.summary).toBe('Enriched 1/2 hooks; 1 failed')
+    expect(result.summary).toBe('Enriched 1/2 hooks; 1 failed. Validated 2 repo links; 1 unreachable')
   })
 
   it('returns empty hooks when all fail', async () => {
@@ -60,7 +60,7 @@ describe('enrichManifest', () => {
 
     expect(result.hooks).toHaveLength(0)
     expect(result.failures).toHaveLength(1)
-    expect(result.summary).toBe('Enriched 0/1 hooks; 1 failed')
+    expect(result.summary).toBe('Enriched 0/1 hooks; 1 failed. Validated 1 repo links; 1 unreachable')
   })
 
   it('skips invalid manifest entries with validation errors', async () => {
@@ -83,6 +83,6 @@ describe('enrichManifest', () => {
 
     const result = await enrichManifest({ readManifest, fetchMetadata })
 
-    expect(result.summary).toMatch(/^Enriched \d+\/\d+ hooks; \d+ failed$/)
+    expect(result.summary).toMatch(/^Enriched \d+\/\d+ hooks; \d+ failed\. Validated \d+ repo links; \d+ unreachable$/)
   })
 })

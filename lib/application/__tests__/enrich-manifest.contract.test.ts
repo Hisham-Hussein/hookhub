@@ -94,7 +94,7 @@ describe('EnrichManifestDeps contract', () => {
         readManifest: async () => scenario.entries,
         fetchMetadata: async () => validMetadata,
       })
-      expect(result.summary).toMatch(/^Enriched \d+\/\d+ hooks; \d+ failed$/)
+      expect(result.summary).toMatch(/^Enriched \d+\/\d+ hooks; \d+ failed\. Validated \d+ repo links; \d+ unreachable$/)
     }
   })
 })
