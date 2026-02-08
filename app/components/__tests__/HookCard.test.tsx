@@ -222,6 +222,24 @@ describe('HookCard', () => {
     expect(starSpan!.props['aria-label']).toBe('0 GitHub stars')
   })
 
+  it('imports formatStarsCount from domain layer (not inline)', async () => {
+    const fs = await import('fs')
+    const path = await import('path')
+    const filePath = path.resolve(__dirname, '../HookCard.tsx')
+    const source = fs.readFileSync(filePath, 'utf-8')
+    expect(source).toContain("from '@/lib/domain/format'")
+    // Should NOT contain inline formatStars function
+    expect(source).not.toMatch(/const formatStars\s*=/)
+  })
+
+  it('imports StarIcon component (not inline SVG for star)', async () => {
+    const fs = await import('fs')
+    const path = await import('path')
+    const filePath = path.resolve(__dirname, '../HookCard.tsx')
+    const source = fs.readFileSync(filePath, 'utf-8')
+    expect(source).toContain("from '@/app/components/StarIcon'")
+  })
+
   it('category and event badges have relative z-10 (clickable above stretched link)', () => {
     const tree = HookCard({ hook: mockHook })
     const spans = findAll(tree, (el) => el.type === 'span')
