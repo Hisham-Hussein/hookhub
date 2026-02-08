@@ -31,6 +31,14 @@ export async function runEnrichment(): Promise<{
     }
   }
 
+  const unreachable = result.validationResults.filter((v) => !v.reachable)
+  if (unreachable.length > 0) {
+    console.warn('Link validation warnings:')
+    for (const v of unreachable) {
+      console.warn(`  ⚠ ${v.url} — ${v.error}`)
+    }
+  }
+
   return { summary: result.summary, success: true }
 }
 
